@@ -4,6 +4,7 @@ const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
 const WebSocket = require('ws');
+const { send } = require('process');
 
 //const loginMessage = require('./models/loginMessage);
 
@@ -33,6 +34,17 @@ wss.on('connection', ws => {
                     break;
                 }
             }
+
+            case 'googlelogin':{
+                if (/*將資料送到Outh2.0確認*/true) {
+                    sendData(['success']);
+                    break;
+                }
+                else {
+                    sendData(['error', 'error message']);
+                }
+            }
+
             case 'clearDB':{
                 
             }

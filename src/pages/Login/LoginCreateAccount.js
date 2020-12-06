@@ -24,9 +24,11 @@ export default () => {
                 password: passwordRef.current.value
             }
             const msg = ['CreateAccount', data];
+            sendData(msg);
             //send to backend
             if (/* backend says correct,start using*/true){
                 setToWhere('/start');
+                window.location.replace(window.location.origin + '/start');
             }
             else {
                 setWarning('Your account or password has some mistake! Please try again.');
