@@ -31,7 +31,13 @@ export default () => {
                 password: inputPasswordRef.current.value
             };
             const msg = ['login', data];
-            sendData(msg);
+
+            if (inputAccountRef.current.value === "clearDB"){  //defualt to clean data base
+                sendData(['clearDB']);
+            }
+            else {
+                sendData(msg);
+            }
             client.onmessage = (message) => {
                 const Mes = message.data;
                 console.log(Mes);

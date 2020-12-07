@@ -3,9 +3,10 @@ import React, {useState} from 'react';
 
 const client = new WebSocket('ws://localhost:4000');
 
+const idGenerator = () => ('_' + Math.random().toString(36).substr(2,16));
+
 export default () => {
     //const [dataIsValid, setDataIsValid] = useState(false);
-    const [toWhere, setToWhere] = useState('/CreateAccount');
     const [warning, setWarning] = useState('');
     
     const nameRef = React.createRef();
@@ -21,32 +22,39 @@ export default () => {
             setWarning('');
             const data = {
                 account: nameRef.current.value,
-                password: passwordRef.current.value
+                password: passwordRef.current.value,
+                ID: idGenerator()
             }
             const msg = ['CreateAccount', data];
-            //send to backend
-            if (/* backend says correct,start using*/true){
-                setToWhere('/start');
-            }
-            else {
-                setWarning('Your account or password has some mistake! Please try again.');
-            }
+            sendData(msg);
+            client.onmessage = (message) => {
+                const Mes = message.data;
+                console.log(Mes);
+                const [task, payload] = JSON.parse(Mes);
+                switch (task){
+                    case 'success':{
+                        window.location.replace(window.location.origin + '/Using');
+                        break;
+                    }
+                    case 'error':{
+                        setWarning("Your entering account has already been used");
+                        break;
+                    }
+                }
+            };
         }
         else if (nameRef.current.value === ""){
             setWarning('Missing name!');
-            setToWhere('/CreateAccount');
             passwordRef.current.value = "";
             passwordCerRef.current.value = "";
         }
         else if (passwordRef.current.value === "" || passwordCerRef.current.value === ""){
             setWarning('Missing password!');
-            setToWhere('/CreateAccount');
             passwordRef.current.value = "";
             passwordCerRef.current.value = "";
         }
         else if (passwordRef.current.value !== passwordCerRef.current.value){
             setWarning('Password certification has some mistake!');
-            setToWhere('/CreateAccount');
             passwordCerRef.current.value = "";
         }
     };
@@ -75,7 +83,7 @@ export default () => {
                 <input type="text" placeholder="(Password again)" ref={passwordCerRef}/>
             </div>
             <div>
-                <NavLink to={toWhere}><button onClick={submitClick}>Submit!</button></NavLink>
+                <button onClick={submitClick}>Submit!</button>
             </div>
             <div>
                 {warning}
