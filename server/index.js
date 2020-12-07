@@ -19,7 +19,7 @@ const wss = new WebSocket.Server({server});
 };*/
 const URL = 'mongodb+srv://b08901039:f1127EE1688@webprogramming.rimw2.mongodb.net/webprogramming-hw6?retryWrites=true&w=majority';
 
-mongoose.connect(URL, {
+mongoose.connect(URL, {  //need to change to process.env.MONGO_URL
     useNewUrlParser: true,
     useUnifiedTopology: true
 });
@@ -41,7 +41,6 @@ db.once('open', () => {
         ws.onmessage = async (message) => {
             const data = message.data;
             console.log(data);
-            //sendData(['testing']);
             const [task, payload] = JSON.parse(data);
     
             switch (task){
@@ -89,6 +88,15 @@ db.once('open', () => {
                     });
                     //need to clear database after testing to much time
                     break;
+                }
+                case 'googlelogin':{
+                    if (/*將資料送到Outh2.0確認*/true) {
+                        sendData(['success']);
+                        break;
+                    }
+                    else {
+                        sendData(['error', 'error message']);
+                    }
                 }
             }
         };

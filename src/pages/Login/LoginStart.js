@@ -1,5 +1,6 @@
 import {NavLink} from 'react-router-dom';
 import React ,{useState} from 'react';
+import GoogleLogin from 'react-google-login';
 
 const client = new WebSocket('ws://localhost:4000');
 
@@ -55,6 +56,30 @@ export default () => {
             }
         }
     };
+
+    //    handle google sign in 
+    const onGoogleSignIn = (response) => {
+        const {tokenId: tokenId, profileObj: profileObj} = response     //profileObj裡面有基本資料，不用確認即可拿到，可先setState
+        const msg = ['googlelogin', ['tokenId', tokenId]]
+        sendData(msg)
+        
+        client.onmessage = (message) => {
+            const Mes = message.data;
+            console.log(Mes);
+            const [task, payload] = JSON.parse(Mes);
+            switch (task){
+                case 'success':{
+                    window.location.replace(window.location.origin + '/Using');  //need to be set to personal url,still needs modify
+                    break;
+                }
+                case 'error':{
+                    setWarning("Your entering account or password has some mistake! Please try it again!");
+                    break;
+                }
+            }
+        }
+    }
+
     return (
         <div>
             <h1>
@@ -70,6 +95,14 @@ export default () => {
                 <button onClick={resetInput}>Reset</button> 
                 <button onClick={loginClick}>Login</button>
                 <NavLink to="/CreateAccount"><button>Start New!</button></NavLink>
+                <GoogleLogin
+                    clientId="138135020067-2p142v5fj2oo5aslq86q3l5tpu72hh9j.apps.googleusercontent.com"
+                    buttonText="Login"
+                    onSuccess={onGoogleSignIn}
+                    cookiePolicy={'single_host_origin'}
+                >
+                <span>使用 Google登入</span>
+                </GoogleLogin>
             </div>
             <div>
                 {warning}

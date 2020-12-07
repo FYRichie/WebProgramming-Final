@@ -27,6 +27,7 @@ export default () => {
             }
             const msg = ['CreateAccount', data];
             sendData(msg);
+
             client.onmessage = (message) => {
                 const Mes = message.data;
                 console.log(Mes);
