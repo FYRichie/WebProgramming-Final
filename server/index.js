@@ -4,6 +4,7 @@ require('dotenv').config({path: path.resolve(__dirname + '../src/.env')});
 const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
+const request = require('request');
 const WebSocket = require('ws');
 const UserInformation = require('./models/userInformation');
 
@@ -26,6 +27,24 @@ mongoose.connect(URL, {  //need to change to process.env.MONGO_URL
 
 const db = mongoose.connection;
 
+const getGoogleProfile = function(TokenId) {
+    return new Promise((resolve, reject) => {
+        if(!TokenId){
+            resolve(null);
+            return
+        };
+        request(`https://oauth2.googleapis.com/tokeninfo?id_token=${TokenId}`,
+        function (error, response, body) {
+            if (error) {console.log(error)}
+            body = JSON.parse(body);
+            if(body.error) {reject(body.error);}
+            else {
+                resolve(body);
+            }
+        })
+    })
+}
+
 db.on('error', (error) => {
     console.error(error);
 });
@@ -40,7 +59,7 @@ db.once('open', () => {
     
         ws.onmessage = async (message) => {
             const data = message.data;
-            console.log(data);
+            //console.log(data);
             const [task, payload] = JSON.parse(data);
     
             switch (task){
@@ -97,13 +116,21 @@ db.once('open', () => {
                     break;
                 }
                 case 'googlelogin':{
-                    if (/*將資料送到Outh2.0確認*/true) {
-                        sendData(['success']);
-                        break;
-                    }
-                    else {
-                        sendData(['error', 'error message']);
-                    }
+                    const tokenId = payload[1]
+                    getGoogleProfile(tokenId)
+                        .then(function (profile) {
+                            if(!profile.name||!profile.email) {
+                                sendData(['error']);
+                                return
+                            }
+                            //console.log(profile)
+                            sendData(['success', profile]);
+                        })
+                        .catch((err) => {
+                            sendData(['error', err]);
+                            console.log(err);
+                        })
+                    break;
                 }
                 case 'userData':{
                     await UserInformation.findOne({
@@ -124,7 +151,7 @@ db.once('open', () => {
                         }
                     })
                 }
-            }
+            };
         };
     })
     
