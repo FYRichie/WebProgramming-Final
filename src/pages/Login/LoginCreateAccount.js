@@ -1,4 +1,3 @@
-import {NavLink} from 'react-router-dom';
 import React, {useState} from 'react';
 
 const client = new WebSocket('ws://localhost:4000');
@@ -23,7 +22,13 @@ export default () => {
             const data = {
                 account: nameRef.current.value,
                 password: passwordRef.current.value,
-                ID: idGenerator()
+                ID: idGenerator(),
+                hasLogin: true,
+                data: {
+                    userName: "User",
+                    layer: ['NTU coures', 'holiday', 'birthday'],
+                    somethingelse: {}
+                }
             }
             const msg = ['CreateAccount', data];
             sendData(msg);
@@ -34,7 +39,7 @@ export default () => {
                 const [task, payload] = JSON.parse(Mes);
                 switch (task){
                     case 'success':{
-                        window.location.replace(window.location.origin + '/Using');
+                        window.location.replace(window.location.origin + '/Personal/' + payload);
                         break;
                     }
                     case 'error':{

@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import "./Start.css";
+import React from 'react';
 import {BrowserRouter,Route} from 'react-router-dom';
 import StartComponent from './StartComponent';
 

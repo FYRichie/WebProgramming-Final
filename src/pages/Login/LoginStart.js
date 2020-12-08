@@ -45,7 +45,7 @@ export default () => {
                 const [task, payload] = JSON.parse(Mes);
                 switch (task){
                     case 'success':{
-                        window.location.replace(window.location.origin + '/Using');  //need to be set to personal url,still needs modify
+                        window.location.replace(window.location.origin + '/Personal/' + payload);  //need to be set to personal url,still needs modify
                         break;
                     }
                     case 'error':{
@@ -69,7 +69,7 @@ export default () => {
             const [task, payload] = JSON.parse(Mes);
             switch (task){
                 case 'success':{
-                    window.location.replace(window.location.origin + '/Using');  //need to be set to personal url,still needs modify
+                    window.location.replace(window.location.origin + '/' + payload);  //need to be set to personal url,still needs modify
                     break;
                 }
                 case 'error':{

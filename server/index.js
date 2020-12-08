@@ -50,11 +50,18 @@ db.once('open', () => {
                         password: payload.password
                     }, () => {
                         console.log("Finding account...");
-                    }).exec((err, res) => {
+                    }).exec(async (err, res) => {
                         if (err) throw err;
                         if (res !== null){
                             console.log("Account finded!");
-                            sendData(["success", payload.ID]);
+                            await UserInformation.findOneAndUpdate({
+                                account: payload.account,
+                                password: payload.password
+                            }, {
+                                $set:{hasLogin:true}
+                            });
+                            console.log(res);
+                            sendData(["success", res.ID]);
                         }
                         else {
                             console.log("Didn't find a registered account!");
@@ -97,6 +104,25 @@ db.once('open', () => {
                     else {
                         sendData(['error', 'error message']);
                     }
+                }
+                case 'userData':{
+                    await UserInformation.findOne({
+                        ID:payload
+                    }, () => {
+                        console.log("Initializing user interface");
+                    }).exec((err, res) => {
+                        if (err) throw err;
+
+                        if (res !== null && res.hasLogin){
+                            console.log("Find user!Sending data...");
+                            console.log(res);
+                            sendData(['success', res.data])
+                        }
+                        else {
+                            console.log("Wrong URL!");
+                            sendData(['error']);
+                        }
+                    })
                 }
             }
         };
