@@ -6,6 +6,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const WebSocket = require('ws');
 const UserInformation = require('./models/userInformation');
+const getGoogleProfile = require('./models/getGoogleProfile');
 
 const app = express();
 const server = http.createServer(app);
@@ -90,15 +91,20 @@ db.once('open', () => {
                     break;
                 }
                 case 'googlelogin':{
-                    if (/*將資料送到Outh2.0確認*/true) {
-                        sendData(['success']);
-                        break;
-                    }
-                    else {
-                        sendData(['error', 'error message']);
-                    }
+                    await getGoogleProfile(tokenId)
+                        .then(function (profile) {
+                            if(!profile.name||!profile.email) {
+                                sendData(['error']);
+                                return
+                            }
+                            sendData(['success', profile]);
+                        })
+                        .catch((err) => {
+                            sendData(['error', err]);
+                        })
+                    break;
                 }
-            }
+            };
         };
     })
     
