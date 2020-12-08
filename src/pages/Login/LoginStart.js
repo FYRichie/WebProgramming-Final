@@ -46,6 +46,7 @@ export default () => {
                 switch (task){
                     case 'success':{
                         window.location.replace(window.location.origin + '/Using');  //need to be set to personal url,still needs modify
+                        console.log(payload);
                         break;
                     }
                     case 'error':{
