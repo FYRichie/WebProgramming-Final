@@ -26,19 +26,19 @@ export default (userData,buttonStates) => {
                 <nav className="btn-group-vertical bg-dark select-bar">
                     {/*select bar,unsizeable*/}
                     <button className="btn-dark select-button" type="button" onClick={() => {
-                        buttonStates.setBTProfile(!BTProfile);
+                        buttonStates.setBTProfile(!buttonStates.BTProfile);
                         buttonStates.setBTSchedule(false);
                         buttonStates.setBTLogout(false);
                     } }><img src={profile}/></button>
                     <button className="btn-dark select-button" type="button" onClick={() => {
                         buttonStates.setBTProfile(false);
-                        buttonStates.setBTSchedule(!BTSchedule);
+                        buttonStates.setBTSchedule(!buttonStates.BTSchedule);
                         buttonStates.setBTLogout(false);
                     }}><img src={schedule}/></button>
                     <button className="btn-dark select-button logout-button" type="button" onClick={() => {
                         buttonStates.setBTProfile(false);
                         buttonStates.setBTSchedule(false);
-                        buttonStates.setBTLogout(!BTLogout);
+                        buttonStates.setBTLogout(!buttonStates.BTLogout);
                     }}><img src={logout}/></button>
                 </nav>
                 {layerBlock()}
