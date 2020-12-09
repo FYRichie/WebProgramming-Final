@@ -4,12 +4,14 @@ import "./PersonalPage.css";
 import Layer from "./Layer";
 import add from "../../images/add.svg";
 
-export default (buttonStates) => {
+export default (/*buttonStates*/layers) => {
     return (
-        <nav>
-            <div className="btn-group">
-                <button className="btn-dark"><img src={add} /></button>
-            </div>
-        </nav>
+        layers.map(element => {
+            <nav>
+                <div className="btn-group">
+                    <button className="btn-dark"><img src={add} /></button>
+                </div>
+            </nav>
+        })
     );
 }

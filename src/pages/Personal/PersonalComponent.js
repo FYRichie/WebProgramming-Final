@@ -10,7 +10,7 @@ export default (userData,buttonStates) => {
     const layerBlock = () => {
         if (buttonStates.BTSchedule && !buttonStates.BTProfile && !buttonStates.BTLogout) {
             return (
-                <LayerBar layers={/*data from settings*/}/>
+                <LayerBar layers={/*data from settings*/userData.data.layer}/>
             );
         }
     }
