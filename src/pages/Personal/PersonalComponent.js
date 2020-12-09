@@ -1,18 +1,51 @@
-import React from 'react';
+import React, {useState} from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "./PersonalPage.css";
+import profile from "../../images/profile.svg";
+import schedule from "../../images/schedule.svg";
+import logout from "../../images/logout.svg";
+import LayerBar from "./LayerBar";
 
-export default (settings) => {
-    console.log(settings);
-    console.log("testing");
-    if (!settings) return (
+export default (userData,buttonStates) => {
+    const layerBlock = () => {
+        if (buttonStates.BTSchedule && !buttonStates.BTProfile && !buttonStates.BTLogout) {
+            return (
+                <LayerBar layers={/*data from settings*/}/>
+            );
+        }
+    }
+
+    if (!userData) return (
         <h1>
             Wrong URL!
         </h1>
     );
     else {
         return (
-            <h1>
-                testing
-            </h1>
+            <React.Fragment>
+                <nav className="btn-group-vertical bg-dark select-bar">
+                    {/*select bar,unsizeable*/}
+                    <button className="btn-dark select-button" type="button" onClick={() => {
+                        buttonStates.setBTProfile(!BTProfile);
+                        buttonStates.setBTSchedule(false);
+                        buttonStates.setBTLogout(false);
+                    } }><img src={profile}/></button>
+                    <button className="btn-dark select-button" type="button" onClick={() => {
+                        buttonStates.setBTProfile(false);
+                        buttonStates.setBTSchedule(!BTSchedule);
+                        buttonStates.setBTLogout(false);
+                    }}><img src={schedule}/></button>
+                    <button className="btn-dark select-button logout-button" type="button" onClick={() => {
+                        buttonStates.setBTProfile(false);
+                        buttonStates.setBTSchedule(false);
+                        buttonStates.setBTLogout(!BTLogout);
+                    }}><img src={logout}/></button>
+                </nav>
+                {layerBlock()}
+                <div>
+                    
+                </div>
+            </React.Fragment>
         );
     }
 };

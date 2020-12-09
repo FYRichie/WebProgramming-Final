@@ -8,6 +8,21 @@ const client = new WebSocket('ws://localhost:4000');
 function PersonalPage(){
     const [hasAskData, setHasAskData] = useState(false);
     const [userData, setUserData] = useState(false);  //all data of specify user from DB
+    const [BTProfile, setBTProfile] = useState(false);
+    const [BTSchedule, setBTSchedule] = useState(false);
+    const [BTLogout, setBTLogout] = useState(false);
+
+    const buttonStates = {
+        "BTProfile": BTProfile,
+        "setBTProfile": setBTProfile,
+        "BTSchedule": BTSchedule,
+        "setBTSchedule": setBTSchedule,
+        "BTLogout": BTLogout,
+        "setBTLogout": setBTLogout,
+        "userData": userData,
+        "setUserData": setUserData
+    }
+
     const servingUrl = window.location.pathname;
     const sendData = (data) => {
         client.send(JSON.stringify(data));
@@ -44,7 +59,7 @@ function PersonalPage(){
     return (
         <BrowserRouter>
             <Route path="/Personal/" component={() => {
-                return PersonalComponent(userData)
+                return PersonalComponent(userData,buttonStates)
             }}></Route>
         </BrowserRouter>
     );

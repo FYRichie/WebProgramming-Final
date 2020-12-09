@@ -5,6 +5,6 @@ export default () => {
         window.location.replace(window.location.origin + '/Login');
     }
     return (
-        <button onClick={LoginClick}>Login</button>
+        <button onClick={LoginClick}>Start!</button>
     );
 }
