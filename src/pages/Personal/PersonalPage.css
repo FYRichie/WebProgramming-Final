@@ -1,4 +1,9 @@
-.select-button {
+.page-align {
+    display: flex;
+    align-items: flex-start !important;
+}
+
+.select-button{
     border-radius: 10%;
     padding: 5px;
     border: none;
@@ -13,3 +18,128 @@
     position: fixed;
     bottom: 0;
 }
+
+.tool-bar{
+    margin-left: 5px;
+    width: 200px;
+    background-color: aqua;
+}
+
+@keyframes spin{
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(180deg);
+    }
+}
+
+.add-button{
+    background-color: transparent;
+    border: none;
+    border-radius: 10%;
+}
+
+
+.add-button:hover {
+    background-color: #adadad;
+}
+
+.unfold-button{
+    border-radius: 10%;
+    padding: 5px;
+    border: none;
+}
+
+.unfold-button:active{
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-timing-function: linear;
+}
+
+.unfold-button:after{
+    transform: rotate(0deg);
+}
+
+.layer {
+    display: flex;
+    margin: 5px 5px 5px 5px;
+    flex-direction: row;
+    align-items: center;
+    border-radius: 5px;
+    height: 25px;
+}
+
+.layer:hover {
+    background-color: #5b5b5b;
+    color: white;
+}
+
+.layer-name {
+    border: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.layer-other {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.layer-color-select {
+    margin-top: 4px;
+    width: 28px;
+    height: 30px;
+}
+
+.layer-list{
+    margin-left: 5px;
+    width: 200px;
+    height: 200px;
+    background-color: salmon;
+    overflow: scroll;
+}
+
+.layer-bar{
+    display: flex;
+    flex-direction: column;
+}
+
+.layer-color-box{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.layer-color-box:hover{
+    width: 13px;
+    height: 13px;
+}
+
+.layer-selected{
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    background-image: url("../../images/selected.svg");
+}
+
+.layer-delete{
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-image: url("../../images/delete.svg");
+    float: right;
+    margin-left: auto;
+    margin-right: 3px;
+}
+
+.layer-delete:hover{
+    border: white 2px dashed;
+    border-radius: 2px;
+}
+

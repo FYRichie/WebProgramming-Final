@@ -11,6 +11,7 @@ function PersonalPage(){
     const [BTProfile, setBTProfile] = useState(false);
     const [BTSchedule, setBTSchedule] = useState(false);
     const [BTLogout, setBTLogout] = useState(false);
+    const [BTAddLayer, setBTAddLayer] = useState(false);
 
     const buttonStates = {
         "BTProfile": BTProfile,
@@ -20,7 +21,9 @@ function PersonalPage(){
         "BTLogout": BTLogout,
         "setBTLogout": setBTLogout,
         "userData": userData,
-        "setUserData": setUserData
+        "setUserData": setUserData,
+        "BTAddLayer": BTAddLayer,
+        "setBTAddLayer": setBTAddLayer
     }
 
     const servingUrl = window.location.pathname;
@@ -54,12 +57,11 @@ function PersonalPage(){
             }
         }
     }
-    console.log(userData);
 
     return (
         <BrowserRouter>
             <Route path="/Personal/" component={() => {
-                return PersonalComponent(userData,buttonStates)
+                return PersonalComponent(buttonStates)
             }}></Route>
         </BrowserRouter>
     );

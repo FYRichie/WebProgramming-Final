@@ -25,8 +25,8 @@ export default () => {
                 ID: idGenerator(),
                 hasLogin: true,
                 data: {
-                    userName: "User",
-                    layer: ['NTU coures', 'holiday', 'birthday'],
+                    userName: nameRef.current.value,
+                    layer: [],
                     somethingelse: {}
                 }
             }
