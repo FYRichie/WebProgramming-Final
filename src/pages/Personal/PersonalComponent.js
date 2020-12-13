@@ -1,10 +1,11 @@
-import React, {useState} from "react";
+import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PersonalPage.css";
 import profile from "../../images/profile.svg";
 import schedule from "../../images/schedule.svg";
 import logout from "../../images/logout.svg";
 import LayerBar from "./LayerBar";
+import Week from "./Week";
 
 export default (buttonStates) => {
     const layerBlock = () => {
@@ -24,7 +25,7 @@ export default (buttonStates) => {
         return (
             <React.Fragment>
                 <div className="page-align">
-                    <div className="btn-group-vertical bg-dark select-bar">
+                    <div className="btn-group-vertical bg-dark select-bar" style={{height: window.screen.height - 45}}>
                         {/*select bar,unsizeable*/}
                         <button className="btn-dark select-button" type="button" onClick={() => {
                             buttonStates.setBTProfile(!buttonStates.BTProfile);
@@ -43,8 +44,8 @@ export default (buttonStates) => {
                         }}><img src={logout}/></button>
                     </div>
                     {layerBlock()}
-                    <div>
-                        
+                    <div className="calender-week" style={{width: window.screen.width, height: window.screen.height - 45}}>
+                        {Week()}
                     </div>
                 </div>
             </React.Fragment>

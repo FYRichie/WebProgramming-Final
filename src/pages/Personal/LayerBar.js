@@ -16,7 +16,6 @@ export default (buttonStates) => {
 
     const addLayer = () => {
         if (nameRef.current.value !== "" && colorRef.current.value !== "" && (buttonStates.userData.layer.find(ele => ele.name === nameRef.current.value) === undefined)){
-            //console.log(buttonStates.userData.layer.find(ele => ele.name === nameRef.current.value) === undefined);
             const _layer = {
                 name: nameRef.current.value,
                 color: colorRef.current.value,

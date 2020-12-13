@@ -1,6 +1,12 @@
 .page-align {
     display: flex;
     align-items: flex-start !important;
+    flex-direction: row;
+}
+
+.select-bar{
+    display: flex;
+    align-items: flex-start;
 }
 
 .select-button{
@@ -9,14 +15,9 @@
     border: none;
 }
 
-.select-bar {
-    margin-bottom: -100%;
-    padding-bottom: 100%;
-}
-
 .logout-button{
-    position: fixed;
-    bottom: 0;
+    /*position: absolute;
+    bottom: 0;*/
 }
 
 .tool-bar{
@@ -141,5 +142,12 @@
 .layer-delete:hover{
     border: white 2px dashed;
     border-radius: 2px;
+}
+
+.calender-week {
+    margin-left: 5px;
+    background-color: yellowgreen;
+    display: flex;
+    flex-direction: row;
 }
 
