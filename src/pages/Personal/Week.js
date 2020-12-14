@@ -8,7 +8,7 @@ export default (buttonStates) => {
     weekDay = [...weekDay.slice(today.getDay(), 7),...weekDay.slice(0, today.getDay())];
     return (
         weekDay.map((ele,index) => (
-            Day(buttonStates, ele, (today.getMonth() + Math.floor((today.getDate() + index) / monthDays[today.getMonth()])) % 12/*Dec needs to add 12 */, today.getDate() + index)
+            Day(buttonStates, ele, (today.getMonth() + 1 + Math.floor((today.getDate() + index) / monthDays[today.getMonth()])) % 12, today.getDate() + index)
         ))
     );
 };

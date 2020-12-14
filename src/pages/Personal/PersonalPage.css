@@ -148,6 +148,24 @@
     margin-left: 5px;
     background-color: yellowgreen;
     display: flex;
+    flex-direction: column;
+    overflow: scroll;
+}
+
+.day {
+    background-color: saddlebrown;
+    margin: 5px 5px 5px 5px;
+    border-radius: 10px;
+    display: flex;
     flex-direction: row;
 }
 
+.day-detail {
+    display: flex;
+    text-align: center;
+    width: auto;
+    background-color: skyblue;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    align-items: center;
+}
