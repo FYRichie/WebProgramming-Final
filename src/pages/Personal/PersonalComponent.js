@@ -1,13 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
+import {Layout, Menu} from "antd";
+import {
+    UserOutlined,
+    ScheduleOutlined,
+    LogoutOutlined,
+} from "@ant-design/icons";
+import "antd/dist/antd.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PersonalPage.css";
-import profile from "../../images/profile.svg";
-import schedule from "../../images/schedule.svg";
-import logout from "../../images/logout.svg";
 import LayerBar from "./LayerBar";
 import Week from "./Week";
 
+const {Header, Content, Footer, Sider} = Layout;
+const {SubMenu} = Menu;
+
 export default (buttonStates) => {
+    const [collapsed, setCollapsed] = useState(true);
+    const onCollapse = collapsed => {
+        setCollapsed(collapsed);
+    }
     const layerBlock = () => {
         if (buttonStates.BTSchedule && !buttonStates.BTProfile && !buttonStates.BTLogout) {
             return (
@@ -24,30 +35,28 @@ export default (buttonStates) => {
     else {
         return (
             <React.Fragment>
-                <div className="page-align">
-                    <div className="btn-group-vertical bg-dark select-bar" style={{height: window.screen.height - 45}}>
-                        {/*select bar,unsizeable*/}
-                        <button className="btn-dark select-button" type="button" onClick={() => {
-                            buttonStates.setBTProfile(!buttonStates.BTProfile);
-                            buttonStates.setBTSchedule(false);
-                            buttonStates.setBTLogout(false);
-                        } }><img src={profile}/></button>
-                        <button className="btn-dark select-button" type="button" onClick={() => {
-                            buttonStates.setBTProfile(false);
-                            buttonStates.setBTSchedule(!buttonStates.BTSchedule);
-                            buttonStates.setBTLogout(false);
-                        }}><img src={schedule}/></button>
-                        <button className="btn-dark select-button logout-button" type="button" onClick={() => {
-                            buttonStates.setBTProfile(false);
-                            buttonStates.setBTSchedule(false);
-                            buttonStates.setBTLogout(!buttonStates.BTLogout);
-                        }}><img src={logout}/></button>
-                    </div>
-                    {layerBlock()}
-                    <div className="calender-week" style={{width: window.screen.width, height: window.screen.height - 45}}>
-                        {Week()}
-                    </div>
-                </div>
+                <Layout>
+                    <Header className="header">
+                        <div className="logo" />
+                        <Menu theme="dark" mode="horizontal" style={{float: "right"}}>
+                            <Menu.Item key="1" icon={<UserOutlined />} />
+                            <Menu.Item key="2" icon={<LogoutOutlined />} />
+                        </Menu>
+                    </Header>
+                    <Layout style={{minHeight: '100vh'}}>
+                        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} className="select-bar">
+                            <div className="logo"/>
+                            <Menu theme="light" mode="inline">
+                                <Menu.Item key="1" icon={<ScheduleOutlined />} onClick={() => {
+                                    buttonStates.setBTSchedule(!buttonStates.BTSchedule);
+                                }}>
+                                    Schedule List
+                                </Menu.Item>
+                            </Menu>
+                        </Sider>
+                        {layerBlock()}
+                    </Layout>
+                </Layout>
             </React.Fragment>
         );
     }

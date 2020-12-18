@@ -1,60 +1,66 @@
 import {NavLink} from 'react-router-dom';
 import React ,{useState} from 'react';
+import {Form, Button, Input, message} from 'antd';
 import GoogleLogin from 'react-google-login';
+import "./Login.css";
 
 const client = new WebSocket('ws://localhost:4000');
 
 export default () => {
-    const [warning, setWarning] = useState('');
-
     const inputAccountRef = React.createRef();
     const inputPasswordRef = React.createRef();
+    const inputRef = React.createRef();
+    const layout = {
+        labelCol: {
+          span: 8,
+        },
+        wrapperCol: {
+          span: 16,
+        },
+    };
+    const tailLayout = {
+        wrapperCol: {
+          offset: 10,
+          span: 16,
+        },
+    };
 
     const sendData = (data) => {
         client.send(JSON.stringify(data));
     };
 
     const resetInput = () => {
-        inputAccountRef.current.value = "";
-        inputPasswordRef.current.value = "";
-        setWarning('');
+        inputRef.current.resetFields();
     };
 
-    const loginClick = () => {
-        if (inputAccountRef.current.value === "") {
-            setWarning('Missing account!');
-            inputPasswordRef.current.value = "";
+    const onFinish = (values) => {
+        console.log('Success:', values);
+        if (values.account === "clearDB"){
+            sendData(["clearDB"]);
         }
-        else if (inputPasswordRef.current.value === "") setWarning("Missing password!");
         else {
-            const data = {
-                account: inputAccountRef.current.value,
-                password: inputPasswordRef.current.value
-            };
-            const msg = ['login', data];
-
-            if (inputAccountRef.current.value === "clearDB"){  //defualt to clean data base
-                sendData(['clearDB']);
-            }
-            else {
-                sendData(msg);
-            }
-            client.onmessage = (message) => {
-                const Mes = message.data;
-                console.log(Mes);
-                const [task, payload] = JSON.parse(Mes);
-                switch (task){
-                    case 'success':{
-                        window.location.replace(window.location.origin + '/Personal/' + payload);  //need to be set to personal url,still needs modify
-                        break;
-                    }
-                    case 'error':{
-                        setWarning("Your entering account or password has some mistake! Please try it again!");
-                        break;
-                    }
+            sendData(["login", values]);
+        }
+        client.onmessage = (mes) => {
+            const Mes = mes.data;
+            console.log(Mes);
+            const [task, payload] = JSON.parse(Mes);
+            switch (task){
+                case 'success':{
+                    window.location.replace(window.location.origin + '/Personal/' + payload);  //need to be set to personal url,still needs modify
+                    break;
+                }
+                case 'error':{
+                    message.error("Your entering account or password has some mistake! Please try it again!");
+                    inputRef.current.resetFields();
+                    break;
                 }
             }
         }
+    };
+
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
     };
 
     //    handle google sign in 
@@ -63,8 +69,8 @@ export default () => {
         const msg = ['googlelogin', ['tokenId', tokenId]]
         sendData(msg)
         
-        client.onmessage = (message) => {
-            const Mes = message.data;
+        client.onmessage = (mes) => {
+            const Mes = mes.data;
             console.log(Mes);
             const [task, payload] = JSON.parse(Mes);
             switch (task){
@@ -73,7 +79,7 @@ export default () => {
                     break;
                 }
                 case 'error':{
-                    setWarning("Your entering account or password has some mistake! Please try it again!");
+                    message.error("Your entering account or password has some mistake! Please try it again!");
                     break;
                 }
             }
@@ -81,32 +87,64 @@ export default () => {
     }
 
     return (
-        <div>
-            <h1>
-                Login page
-            </h1>
-            <div>
-                <input type="text" placeholder="Please enter your account" ref={inputAccountRef}/>
-            </div>
-            <div>
-                <input type="text" placeholder="Please enter your password" ref={inputPasswordRef}/>
-            </div>
-            <div>
-                <button onClick={resetInput}>Reset</button> 
-                <button onClick={loginClick}>Login</button>
-                <NavLink to="/CreateAccount"><button>Start New!</button></NavLink>
+        <Form
+            {...layout}
+            name="basic"
+            initialValues={{
+                remember: true,
+            }}
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            ref={inputRef}
+            className="form-block"
+        >
+            <Form.Item
+                label="Account"
+                name="account"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please enter username!"
+                    }
+                ]}
+            >
+                <Input placeholder="Account" ref={inputAccountRef} className="input"/>
+            </Form.Item>
+            <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please enter your password!"
+                    }
+                ]}
+            >
+                <Input.Password placeholder="Password" ref={inputPasswordRef} className="input"/>
+            </Form.Item>
+            <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit">
+                    Login
+                </Button>
+                <Button type="primary" onClick={resetInput}>
+                    Reset
+                </Button>
+                <NavLink to="/CreateAccount">
+                    <Button type="primary">
+                        Start New!
+                    </Button>
+                </NavLink>
+            </Form.Item>
+            <Form.Item className="google-login">
                 <GoogleLogin
                     clientId="138135020067-2p142v5fj2oo5aslq86q3l5tpu72hh9j.apps.googleusercontent.com"
                     buttonText="Login"
                     onSuccess={onGoogleSignIn}
                     cookiePolicy={'single_host_origin'}
                 >
-                <span>使用 Google登入</span>
+                    <span>使用Google登入</span>
                 </GoogleLogin>
-            </div>
-            <div>
-                {warning}
-            </div>
-        </div>
+            </Form.Item>
+        </Form>
     );
 }

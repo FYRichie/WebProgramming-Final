@@ -2,7 +2,7 @@ import React from "react";
 import Timeline from "react-calendar-timeline/lib";
 import moment from "moment";
 
-const group = [
+/*const group = [
     {
         id: 1,
         title: "group 1",
@@ -25,10 +25,11 @@ const items = [{
       'aria-hidden': true,
       onDoubleClick: () => { console.log('You clicked double!') }
     }
-  }];
+  }];*/
 
 export default (buttonStates,weekday,month,day) => {
     if (month === 0) month = 12;
+    console.log(String(month) + '/' + String(day) + ' ' + weekday);
     return (
         <div style={{height: window.screen.height - 55, width: window.screen.width - 40}} className="day">
             <div className="day-detail">
@@ -36,12 +37,12 @@ export default (buttonStates,weekday,month,day) => {
                 {String(month) + '/' + String(day)}
             </div>
             <div>
-                <Timeline 
+                {/*<Timeline 
                     groups={group}
                     items={items}
                     defaultTimeStart={moment().add(-12, 'hour')}
                     defaultTimeEnd={moment().add(12, 'hour')}
-                />
+                />*/}
             </div>
         </div>
     );

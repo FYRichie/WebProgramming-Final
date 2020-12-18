@@ -1,3 +1,5 @@
+@import '~antd/dist/antd.css';
+
 .page-align {
     display: flex;
     align-items: flex-start !important;
@@ -5,8 +7,7 @@
 }
 
 .select-bar{
-    display: flex;
-    align-items: flex-start;
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .select-button{
@@ -63,17 +64,7 @@
 }
 
 .layer {
-    display: flex;
-    margin: 5px 5px 5px 5px;
-    flex-direction: row;
-    align-items: center;
-    border-radius: 5px;
-    height: 25px;
-}
-
-.layer:hover {
-    background-color: #5b5b5b;
-    color: white;
+    width: 250px;
 }
 
 .layer-name {

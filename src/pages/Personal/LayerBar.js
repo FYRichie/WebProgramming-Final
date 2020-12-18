@@ -1,13 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
+import {Layout, Menu, Button, Input, Drawer} from "antd";
+import {
+    PlusCircleOutlined,
+    UnorderedListOutlined
+} from "@ant-design/icons";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-bootstrap";
 import "./PersonalPage.css";
 import Layer from "./Layer";
-import add from "../../images/add.svg";
-import unfold from "../../images/unfold.svg";
-import {Dropdown} from "react-bootstrap";
+
+const {Header, Content, Footer, Sider} = Layout;
+const {SubMenu} = Menu;
 
 export default (buttonStates) => {
+    const [aL, setAL] = useState(false);
     const nameRef = React.createRef();
     const colorRef = React.createRef();
     const layers = (buttonStates) => {
@@ -43,9 +49,12 @@ export default (buttonStates) => {
             alert("Please choose a color!");
         }
     }
+    const add = (
+        <Input placeholder="Enter a new layer name!" prefix={<UnorderedListOutlined />}/>
+    );
 
     return (
-        <div className="layer-bar">
+        /*<div className="layer-bar">
             <div className="btn-group tool-bar">
                 <Dropdown>
                     <Dropdown.Toggle>
@@ -59,11 +68,44 @@ export default (buttonStates) => {
                         </div>  
                     </Dropdown.Menu>
                 </Dropdown>
-                {/*<button className="btn-dark unfold-button"><img src={unfold}/></button>*/}
             </div>
             <div className="layer-list">
-                {/*add user layers*/layers(buttonStates)}
+                {layers(buttonStates)}
             </div>
-        </div>        
+        </div>*/
+        <div>
+            <div className="logo"/>
+            testing
+        </div>
+        /*<Sider>
+            <Button type="primary" shape="round" icon={<PlusCircleOutlined />} onClick={setAL(true)}>
+                Add a layer!
+            </Button>
+            <Drawer 
+                title="Add a new layer!" 
+                width={250} 
+                onClose={setAL(false)}
+                visible={aL}
+                footer={
+                    <div
+                      style={{
+                        textAlign: 'left',
+                      }}
+                    >
+                      <Button onClick={setAL(false)} style={{ marginRight: 8 }}>
+                        Cancel
+                      </Button>
+                      <Button onClick={() => {alert("not finised")}} type="primary">
+                        Submit
+                      </Button>
+                    </div>
+                  }
+            >
+                
+                </Drawer>
+            <Menu>
+
+            </Menu>
+        </Sider>*/
     );
 }
