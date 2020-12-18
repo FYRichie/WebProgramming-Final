@@ -1,31 +1,48 @@
 import React, {useState} from 'react';
+import {Form, Input, Button, message} from "antd";
 
 const client = new WebSocket('ws://localhost:4000');
 
 const idGenerator = () => ('_' + Math.random().toString(36).substr(2,16));
 
 export default () => {
-    //const [dataIsValid, setDataIsValid] = useState(false);
-    const [warning, setWarning] = useState('');
-    
-    const nameRef = React.createRef();
-    const passwordRef = React.createRef();
-    const passwordCerRef = React.createRef();
+    const inputRef = React.createRef();
+    const layout = {
+        labelCol: {
+          span: 8,
+        },
+        wrapperCol: {
+          span: 16,
+        },
+    };
+    const tailLayout = {
+        wrapperCol: {
+          offset: 8,
+          span: 16,
+        },
+    };
 
     const sendData = (data) => {
         client.send(JSON.stringify(data));
     };
-
-    const submitClick = () => {
-        if (nameRef.current.value !== "" && passwordRef.current.value !== "" && passwordRef.current.value === passwordCerRef.current.value){
-            setWarning('');
+    const resetInput = () => {
+        message.warning("Reset all inputs.");
+        inputRef.current.resetFields();
+    };
+    const onFinish = (values) => {
+        console.log('Success:', values);
+        console.log(inputRef.current);
+        if (values.password !== values.passwordComfirm){
+            message.error("Password certification has some mistake!");
+        }
+        else {
             const data = {
-                account: nameRef.current.value,
-                password: passwordRef.current.value,
+                account: values.account,
+                password: values.password,
                 ID: idGenerator(),
                 hasLogin: true,
                 data: {
-                    userName: nameRef.current.value,
+                    userName: values.account,
                     layer: [],
                     somethingelse: {}
                 }
@@ -33,67 +50,80 @@ export default () => {
             const msg = ['CreateAccount', data];
             sendData(msg);
 
-            client.onmessage = (message) => {
-                const Mes = message.data;
+            client.onmessage = (mes) => {
+                const Mes = mes.data;
                 console.log(Mes);
                 const [task, payload] = JSON.parse(Mes);
                 switch (task){
-                    case 'success':{
+                    case "success":{
                         window.location.replace(window.location.origin + '/Personal/' + payload);
                         break;
                     }
-                    case 'error':{
-                        setWarning("Your entering account has already been used");
+                    case "error":{
+                        message.error("The account has been used! Please use a new name!");
+                        inputRef.current.resetFields();
                         break;
                     }
                 }
-            };
+            }
         }
-        else if (nameRef.current.value === ""){
-            setWarning('Missing name!');
-            passwordRef.current.value = "";
-            passwordCerRef.current.value = "";
-        }
-        else if (passwordRef.current.value === "" || passwordCerRef.current.value === ""){
-            setWarning('Missing password!');
-            passwordRef.current.value = "";
-            passwordCerRef.current.value = "";
-        }
-        else if (passwordRef.current.value !== passwordCerRef.current.value){
-            setWarning('Password certification has some mistake!');
-            passwordCerRef.current.value = "";
-        }
+    };
+    const onFinishFailed = (errorInfo) => {
+        console.log('Failed:', errorInfo);
     };
 
     return (
-        <div>
-            <h1>
-                Creating Account Page
-            </h1>
-            <div>
-                <h2 className="form-inline">
-                    Please enter your name: 
-                </h2>
-                <input type="text" placeholder="(Name)" ref={nameRef}/>
-            </div>
-            <div>
-                <h2 className="form-inline">
-                    Please enter yout password: 
-                </h2>
-                <input type="text" placeholder="(Password)" ref={passwordRef}/>
-            </div>
-            <div>
-                <h2 className="form-inline">
-                    Please certify your password: 
-                </h2>
-                <input type="text" placeholder="(Password again)" ref={passwordCerRef}/>
-            </div>
-            <div>
-                <button onClick={submitClick}>Submit!</button>
-            </div>
-            <div>
-                {warning}
-            </div>
-        </div>
+        <Form
+            {...layout}
+            name="basic"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            ref={inputRef}
+        >
+            <Form.Item
+                label="Account"
+                name="account"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please enter an account name!"
+                    }
+                ]}
+            >
+                <Input placeholder="Account name" className="input"/>
+            </Form.Item>
+            <Form.Item
+                label="Password"
+                name="password"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please enter password!"
+                    }
+                ]}
+            >
+                <Input.Password placeholder="Password" className="input"/>
+            </Form.Item>
+            <Form.Item
+                label="Comfirm Password"
+                name="passwordComfirm"
+                rules={[
+                    {
+                        required: true,
+                        message: "Please enter your password again!"
+                    }
+                ]}
+            >
+                <Input.Password placeholder="Comfirm password" className="input"/>
+            </Form.Item>
+            <Form.Item {...tailLayout}>
+                <Button type="primary" htmlType="submit">
+                    Submit
+                </Button>
+                <Button type="primary" onClick={resetInput}>
+                    Reset
+                </Button>
+            </Form.Item>
+        </Form>
     );
 }

@@ -7,8 +7,6 @@ import "./Login.css";
 const client = new WebSocket('ws://localhost:4000');
 
 export default () => {
-    const inputAccountRef = React.createRef();
-    const inputPasswordRef = React.createRef();
     const inputRef = React.createRef();
     const layout = {
         labelCol: {
@@ -20,7 +18,7 @@ export default () => {
     };
     const tailLayout = {
         wrapperCol: {
-          offset: 10,
+          offset: 8,
           span: 16,
         },
     };
@@ -28,11 +26,10 @@ export default () => {
     const sendData = (data) => {
         client.send(JSON.stringify(data));
     };
-
     const resetInput = () => {
+        message.warning("Reset all inputs.");
         inputRef.current.resetFields();
     };
-
     const onFinish = (values) => {
         console.log('Success:', values);
         if (values.account === "clearDB"){
@@ -58,11 +55,9 @@ export default () => {
             }
         }
     };
-
     const onFinishFailed = (errorInfo) => {
         console.log('Failed:', errorInfo);
     };
-
     //    handle google sign in 
     const onGoogleSignIn = (response) => {
         const {tokenId: tokenId, profileObj: profileObj} = response     //profileObj裡面有基本資料，不用確認即可拿到，可先setState
@@ -90,9 +85,6 @@ export default () => {
         <Form
             {...layout}
             name="basic"
-            initialValues={{
-                remember: true,
-            }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             ref={inputRef}
@@ -104,11 +96,11 @@ export default () => {
                 rules={[
                     {
                         required: true,
-                        message: "Please enter username!"
+                        message: "Please enter account!"
                     }
                 ]}
             >
-                <Input placeholder="Account" ref={inputAccountRef} className="input"/>
+                <Input placeholder="Account" className="input"/>
             </Form.Item>
             <Form.Item
                 label="Password"
@@ -120,7 +112,7 @@ export default () => {
                     }
                 ]}
             >
-                <Input.Password placeholder="Password" ref={inputPasswordRef} className="input"/>
+                <Input.Password placeholder="Password" className="input"/>
             </Form.Item>
             <Form.Item {...tailLayout}>
                 <Button type="primary" htmlType="submit">
@@ -135,7 +127,7 @@ export default () => {
                     </Button>
                 </NavLink>
             </Form.Item>
-            <Form.Item className="google-login">
+            <Form.Item {...tailLayout}>
                 <GoogleLogin
                     clientId="138135020067-2p142v5fj2oo5aslq86q3l5tpu72hh9j.apps.googleusercontent.com"
                     buttonText="Login"

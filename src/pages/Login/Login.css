@@ -1,11 +1,7 @@
 .form-block{
-    margin-top: 200px;
-    height: auto;
+    
 }
 .input{
     width: 500px;
-}
-.google-login{
-    margin-left: 570px;
 }
 @import '~antd/dist/antd.css'
