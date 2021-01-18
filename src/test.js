@@ -1,32 +1,14 @@
-import { Button, Tooltip } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
+import { Descriptions } from 'antd';
 
 ReactDOM.render(
-  <>
-    <Tooltip title="search">
-      <Button type="primary" shape="circle" icon={<SearchOutlined />} />
-    </Tooltip>
-    <Button type="primary" shape="circle">
-      A
-    </Button>
-    <Button type="primary" icon={<SearchOutlined />}>
-      Search
-    </Button>
-    <Tooltip title="search">
-      <Button shape="circle" icon={<SearchOutlined />} />
-    </Tooltip>
-    <Button icon={<SearchOutlined />}>Search</Button>
-    <br />
-    <Tooltip title="search">
-      <Button shape="circle" icon={<SearchOutlined />} />
-    </Tooltip>
-    <Button icon={<SearchOutlined />}>Search</Button>
-    <Tooltip title="search">
-      <Button type="dashed" shape="circle" icon={<SearchOutlined />} />
-    </Tooltip>
-    <Button type="dashed" icon={<SearchOutlined />}>
-      Search
-    </Button>
-  </>,
+  <Descriptions title="User Info">
+    <Descriptions.Item label="UserName">Zhou Maomao</Descriptions.Item>
+    <Descriptions.Item label="Telephone">1810000000</Descriptions.Item>
+    <Descriptions.Item label="Live">Hangzhou, Zhejiang</Descriptions.Item>
+    <Descriptions.Item label="Remark">empty</Descriptions.Item>
+    <Descriptions.Item label="Address">
+      No. 18, Wantang Road, Xihu District, Hangzhou, Zhejiang, China
+    </Descriptions.Item>
+  </Descriptions>,
   mountNode,
 );

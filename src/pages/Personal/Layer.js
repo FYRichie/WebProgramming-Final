@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Menu, Button, Input, Modal, message, DatePicker, Space } from "antd";
 import {
     PlusOutlined,
-    DeleteOutlined
+    DeleteOutlined,
+    CheckOutlined,
+    CloseOutlined
 } from "@ant-design/icons"
 import Events from "./Events";
 import TimeList from "./TimeList";
+import UserDataToDate from "./UserDataToDate";
 
 const {SubMenu} = Menu;
 const {RangePicker} = DatePicker;
@@ -47,10 +50,11 @@ export default (ele, index, buttonStates) => {
             const newLayer = {
                 layerName: ele.layerName,
                 layerColor: ele.layerColor,
+                layerSelected: true,
                 event: [...ele.event, {
                     eventName: eventNameRef.current.state.value,
                     eventTime: eventTime,
-                    eventRepeatEveryweek: eventRepeatEveryweek
+                    //eventRepeatEveryweek: eventRepeatEveryweek
                 }]
             }
 
@@ -62,6 +66,8 @@ export default (ele, index, buttonStates) => {
 
             buttonStates.setUserData(newUserData);
             setAddModalVisible(false);
+
+            console.log(UserDataToDate(buttonStates.userData));
         }
     }
 
@@ -91,6 +97,22 @@ export default (ele, index, buttonStates) => {
             }
             else message.error("Please enter a valid time interval!");
         }
+    }
+
+    const selectLayer = () => {
+        const newLayer = {
+            layerName: ele.layerName,
+            layerColor: ele.layerColor,
+            layerSelected: !ele.layerSelected,
+            event: ele.event
+        }
+        const newUserData = {
+            userName: buttonStates.userData.userName,
+            layer: [...buttonStates.userData.layer.slice(0, index), newLayer, ...buttonStates.userData.layer.slice(index + 1, buttonStates.userData.layer.length)],
+            somethingelse: buttonStates.userData.somethingelse
+        }
+
+        buttonStates.setUserData(newUserData);
     }
 
     return (
@@ -175,13 +197,23 @@ export default (ele, index, buttonStates) => {
                         display: "flex",
                         alignItems: "center",
                         borderColor: "transparent",
-                        marginLeft: "137px",
+                        marginLeft: "108px",
                         height: "27px"
                     }}
                 />
                 <Button
                     icon={<DeleteOutlined/>} 
                     onClick={showDeleteModal}
+                    style={{
+                        display: "flex",
+                        alignItems: "center",
+                        borderColor: "transparent",
+                        height: "27px"
+                    }}
+                />
+                <Button 
+                    icon={buttonStates.userData.layer[index].layerSelected ? <CheckOutlined /> : <CloseOutlined/>}
+                    onClick={selectLayer}
                     style={{
                         display: "flex",
                         alignItems: "center",

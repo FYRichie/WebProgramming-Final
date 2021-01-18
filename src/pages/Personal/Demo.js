@@ -14,24 +14,15 @@ import {
 	DateNavigator,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-function convert(element, ID) {
-	console.log(element);
-	return (
-		{
-			title: element.eventName,
-			startDate: element.eventTime[0].startTime.toDate(),
-			endDate: element.eventTime[0].endTime.toDate(),
-			id: ID
-		}
-	)
+const convert = (ele, id) => {
+	
 }
 
 export default (props) => {
 	const today = new Date();
-	
 	const convertedData = (props.appointments.layer.length > 0 && props.appointments.layer[0].event)?(props.appointments.layer[0].event.map((element, index) => 
 		convert(element, index)
-	)):undefined
+	)):undefined;
 	
 	const [data, setData] = useState(convertedData);
 	const [currentDate, setCurrentDate] = useState(today);
@@ -59,14 +50,14 @@ export default (props) => {
 	);
 
 	const CommandButton = useCallback(({ id, ...restProps }) => {
-    if (id === 'deleteButton') {
-    	return <AppointmentTooltip.CommandButton id={id} {...restProps} disabled={false} />;
-    }
-    return <AppointmentTooltip.CommandButton id={id} {...restProps} />;
+		if (id === 'deleteButton') {
+			return <AppointmentTooltip.CommandButton id={id} {...restProps} disabled={false} />;
+		}
+		return <AppointmentTooltip.CommandButton id={id} {...restProps} />;
   	});
 
 	const handleCurrentDateChange = (newDate) => {
-	setCurrentDate(newDate)
+		setCurrentDate(newDate)
   	}
 
 	return (

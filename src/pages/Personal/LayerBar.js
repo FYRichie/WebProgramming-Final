@@ -4,8 +4,6 @@ import {
     PlusOutlined,
     UnorderedListOutlined
 } from "@ant-design/icons";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "react-bootstrap";
 import "./PersonalPage.css";
 import Layer from "./Layer";
 

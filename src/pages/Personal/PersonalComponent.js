@@ -9,7 +9,7 @@ import "antd/dist/antd.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PersonalPage.css";
 import LayerBar from "./LayerBar";
-import Demo from "./Demo";
+//import Demo from "./Demo";
 
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
@@ -51,7 +51,7 @@ export default (buttonStates) => {
                                     icon={<ScheduleOutlined />} 
                                     onClick={() => {
                                         buttonStates.setBTSchedule(!buttonStates.BTSchedule);
-                                        console.log(buttonStates.userData);
+                                        //console.log(buttonStates.userData);
                                     }}
                                     style={{
                                         display: "flex",
@@ -63,7 +63,7 @@ export default (buttonStates) => {
                             </Menu>
                         </Sider>
                         {layerBlock()}
-                        <Demo appointments={buttonStates.userData}/>
+                        {/*<Demo appointments={buttonStates.userData}/>*/}
                     </Layout>
                 </Layout>
             </React.Fragment>
