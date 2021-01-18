@@ -3,6 +3,7 @@ import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
+import UserDataToDate from "./UserDataToDate";
 import {
 	Scheduler,
 	WeekView,
@@ -14,16 +15,9 @@ import {
 	DateNavigator,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-const convert = (ele, id) => {
-	
-}
-
 export default (props) => {
 	const today = new Date();
-	const convertedData = (props.appointments.layer.length > 0 && props.appointments.layer[0].event)?(props.appointments.layer[0].event.map((element, index) => 
-		convert(element, index)
-	)):undefined;
-	
+	const convertedData = UserDataToDate(props.appointments)
 	const [data, setData] = useState(convertedData);
 	const [currentDate, setCurrentDate] = useState(today);
 
@@ -48,13 +42,21 @@ export default (props) => {
 		</AppointmentTooltip.Header>
 		)
 	);
-
-	const CommandButton = useCallback(({ id, ...restProps }) => {
-		if (id === 'deleteButton') {
-			return <AppointmentTooltip.CommandButton id={id} {...restProps} disabled={false} />;
-		}
-		return <AppointmentTooltip.CommandButton id={id} {...restProps} />;
-  	});
+	const Appointment = ({
+		children, style, ...restProps
+	  }) => (
+		<Appointments.Appointment
+		  {...restProps}
+		  style={{
+			...style,
+			backgroundColor: restProps.data.color,
+			borderRadius: '8px',
+			opacity: restProps.data.isSelected ? 1.0 : 0.0,
+		  }}
+		>
+		  {children}
+		</Appointments.Appointment>
+	  );
 
 	const handleCurrentDateChange = (newDate) => {
 		setCurrentDate(newDate)
@@ -84,16 +86,13 @@ export default (props) => {
 			<Toolbar />
 			<DateNavigator />
 			<TodayButton />
-			<Appointments />
+			<Appointments appointmentComponent={Appointment}/>
 			<AppointmentTooltip
 				headerComponent={Header}
 				//showOpenButton
 				showDeleteButton
 				//commendButtonComponent={CommandButton}
 			/>
-			{/* <AppointmentForm
-				commandButtonComponent={CommandButton}
-			/> */}
 		</Scheduler>
 		</Paper>
 	</React.Fragment>
