@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, Button, Input, Modal, message, DatePicker, Space } from "antd";
+import { Menu, Button, Input, Modal, message, DatePicker, Space, InputNumber } from "antd";
 import {
     PlusOutlined,
     DeleteOutlined,
@@ -24,7 +24,7 @@ export default (ele, index, buttonStates) => {
     const [addModalVisible, setAddModalVisible] = useState(false);
     const [deleteModalVisible, setDeleteModalVisible] = useState(false);
     const [eventTime, setEventTime] = useState([]);
-    const [eventRepeatEveryweek, setEventRepeatEveryweek] = useState(false);
+    const [eventRepeatEveryweek, setEventRepeatEveryweek] = useState(1);
     const eventNameRef = React.useRef();
 
     const events = () => {
@@ -54,7 +54,7 @@ export default (ele, index, buttonStates) => {
                 event: [...ele.event, {
                     eventName: eventNameRef.current.state.value,
                     eventTime: eventTime,
-                    //eventRepeatEveryweek: eventRepeatEveryweek
+                    eventRepeatEveryweek: eventRepeatEveryweek
                 }]
             }
 
@@ -115,6 +115,10 @@ export default (ele, index, buttonStates) => {
         buttonStates.setUserData(newUserData);
     }
 
+    const repeat = (value) => {
+        setEventRepeatEveryweek(value);
+    }
+
     return (
         <SubMenu
             title={ele.layerName}
@@ -164,9 +168,26 @@ export default (ele, index, buttonStates) => {
                         }}
                     />
                 </Space>
-                {/*add time intervals visualization */}
                 {TimeList(eventTime)}
-                {/*add repeats everyweek*/}
+                <div
+                    style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center"
+                    }}
+                >
+                    <p
+                        style={{
+                            margin:"0px 8px 0px 20px"
+                        }}
+                    >Repeat week :</p>
+                    <InputNumber 
+                        min={1}
+                        max={75}
+                        defaultValue={1}
+                        onChange={repeat}
+                    />
+                </div>
             </Modal>
             <Modal
                 title="Warning!"
@@ -212,7 +233,7 @@ export default (ele, index, buttonStates) => {
                     }}
                 />
                 <Button 
-                    icon={buttonStates.userData.layer[index].layerSelected ? <CheckOutlined /> : <CloseOutlined/>}
+                    icon={!buttonStates.userData.layer[index].layerSelected ? <CheckOutlined /> : <CloseOutlined/>}
                     onClick={selectLayer}
                     style={{
                         display: "flex",

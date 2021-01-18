@@ -1,6 +1,6 @@
 export default (userData) => {
     let data = [];
-    let id = 0;
+    let Id = 0;
     const layer = userData.layer;
     for (let layerIndex = 0; layerIndex < layer.length; layerIndex++){
         const Color = layer[layerIndex].layerColor;
@@ -8,6 +8,7 @@ export default (userData) => {
         const event = layer[layerIndex].event;
         for (let eventIndex = 0; eventIndex < event.length; eventIndex++){
             const Name = event[eventIndex].eventName;
+            const Repeat = event[eventIndex].eventRepeatEveryweek;
             const Time = event[eventIndex].eventTime;
             for (let timeIndex = 0; timeIndex < Time.length; timeIndex++){
                 const startTime = Time[timeIndex].startTime.toDate();
@@ -16,11 +17,12 @@ export default (userData) => {
                     title: Name,
                     color: Color,
                     isSelected: isSelected,
-                    id: id,
+                    id: Id,
+                    repeat: Repeat,
                     startDate: startTime,
                     endDate: endTime
                 });
-                id += 1;
+                Id += 1;
             }
         }
     }

@@ -68,6 +68,7 @@ export default (buttonStates) => {
                 title="Add a layer!"
                 centered
                 visible={modalVisible}
+                onCancel={cancelAdd}
                 footer={[
                     <Button onClick={cancelAdd}>Cancel</Button>,
                     <Button type="primary" onClick={comfirmAddLayer}>Add</Button>
