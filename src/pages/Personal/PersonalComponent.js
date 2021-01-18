@@ -45,11 +45,18 @@ export default (buttonStates) => {
                     </Header>
                     <Layout style={{minHeight: '100vh'}}>
                         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} className="select-bar">
-                            <div className="logo"/>
                             <Menu theme="light" mode="inline">
-                                <Menu.Item key="1" icon={<ScheduleOutlined />} onClick={() => {
-                                    buttonStates.setBTSchedule(!buttonStates.BTSchedule);
-                                }}>
+                                <Menu.Item 
+                                    key="1" 
+                                    icon={<ScheduleOutlined />} 
+                                    onClick={() => {
+                                        buttonStates.setBTSchedule(!buttonStates.BTSchedule);
+                                    }}
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center"
+                                    }}
+                                >
                                     Schedule List
                                 </Menu.Item>
                             </Menu>
