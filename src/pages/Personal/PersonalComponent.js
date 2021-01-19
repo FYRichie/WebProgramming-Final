@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Menu, message, Spin, Modal, Button } from "antd";
+import { Layout, Menu, message, Spin, Modal, Button, Result } from "antd";
 import {
     UserOutlined,
     ScheduleOutlined,
@@ -61,7 +61,7 @@ export default (buttonStates, sendData) => {
             data: buttonStates.userData
         }]);
         sendData(["logout", buttonStates.userID]);
-        window.location.href = "http://localhost:3000";
+        window.location.replace(window.location.origin);
     }
 
     if (buttonStates.Saved !== null){
@@ -114,7 +114,13 @@ export default (buttonStates, sendData) => {
                 </Modal>
             </Layout>
         </Layout>
-    </React.Fragment> : <h1>Wrong Url!</h1>;
+    </React.Fragment> : <React.Fragment>
+        <Result 
+            status="404"
+            title="404"
+            subTitle="There exist some error..."
+        />
+    </React.Fragment>;
     
     return {
         personalComponent
