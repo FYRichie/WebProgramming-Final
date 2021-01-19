@@ -93,7 +93,7 @@ function PersonalPage(){
                     ID: userID,
                     data: userData
                 }]);
-                //sendData(["logout", userID]);
+                sendData(["logout", userID]);
                 setLogout(false);
                 // window.location = ``
                 console.log(window.location);

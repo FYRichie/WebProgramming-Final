@@ -174,6 +174,16 @@ db.once('open', () => {
                         ID: payload
                     }, {
                         $set: {hasLogin: false}
+                    }, {returnOriginal: false}).exec((err, res) => {
+                        if (err) throw err;
+
+                        if (res !== null) {
+                            console.log("Logout success.");
+                            console.log(res);
+                        }
+                        else {
+                            console.log("Logout failed.");
+                        }
                     });
                 }
             };
