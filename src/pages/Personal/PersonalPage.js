@@ -12,6 +12,10 @@ function PersonalPage(){
     const [BTSchedule, setBTSchedule] = useState(false);
     const [BTLogout, setBTLogout] = useState(false);
     const [BTAddLayer, setBTAddLayer] = useState(false);
+    const [BTSaveData, setBTSaveData] = useState(false);
+    const [Saved, setSaved] = useState(null);
+    const [SaveLoading, setSaveLoading] = useState(false);
+    const [userID, setUserID] = useState("");
 
     const buttonStates = {
         "BTProfile": BTProfile,
@@ -23,7 +27,13 @@ function PersonalPage(){
         "userData": userData,
         "setUserData": setUserData,
         "BTAddLayer": BTAddLayer,
-        "setBTAddLayer": setBTAddLayer
+        "setBTAddLayer": setBTAddLayer,
+        "BTSaveData": BTSaveData,
+        "setBTSaveData": setBTSaveData,
+        "Saved": Saved,
+        "setSaved": setSaved,
+        "SaveLoading": SaveLoading,
+        "setSaveLoading": setSaveLoading
     }
 
     const servingUrl = window.location.pathname;
@@ -46,14 +56,30 @@ function PersonalPage(){
                 const [task, payload] = JSON.parse(Mes);
                 switch (task){
                     case 'success':{
-                        setUserData(payload);
+                        setUserData(payload.data);
+                        setUserID(payload.ID);
                         break;
                     }
                     case 'error':{
                         setUserData(false);
                         break;
                     }
+                    case 'save':{
+                        if (payload === "success") setSaved(true);
+                        else if (payload === "error") setSaved(false);
+                        setSaveLoading(false);
+                        break;
+                    }
                 }
+            }
+
+            if (BTSaveData){
+                sendData(['save', {
+                    ID: userID,
+                    data: userData
+                }]);
+                setSaveLoading(true);
+                setBTSaveData(false);
             }
         }
     }

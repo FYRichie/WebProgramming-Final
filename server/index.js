@@ -143,13 +143,37 @@ db.once('open', () => {
                         if (res !== null && res.hasLogin){
                             console.log("Find user!Sending data...");
                             console.log(res);
-                            sendData(['success', res.data])
+                            sendData(['success', {
+                                ID: res.ID,
+                                data: res.data
+                            }])
                         }
                         else {
                             console.log("Wrong URL!");
                             sendData(['error']);
                         }
                     })
+                    break;
+                }
+                case 'save':{
+                    await UserInformation.findOneAndUpdate({
+                        ID: payload.ID
+                    }, {
+                        $set: {data: payload.data}
+                    }, {returnOriginal: false}).exec((err, res) => {
+                        if (err) throw err;
+
+                        if (res !== null) {
+                            console.log("Save success.");
+                            console.log(res);
+                            sendData(['save', 'success']);
+                        }
+                        else {
+                            console.log("Save failed.");
+                            sendData(['save', 'error']);
+                        }
+                    });
+                    break;
                 }
             };
         };

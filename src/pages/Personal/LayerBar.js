@@ -49,6 +49,7 @@ export default (buttonStates) => {
             }
             buttonStates.setUserData(newUserData);
             setModalVisible(false);
+            console.log(buttonStates.userData);
         }
     }
 
