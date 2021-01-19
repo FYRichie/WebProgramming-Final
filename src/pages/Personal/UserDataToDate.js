@@ -11,8 +11,8 @@ export default (userData) => {
             const Repeat = event[eventIndex].eventRepeatEveryweek;
             const Time = event[eventIndex].eventTime;
             for (let timeIndex = 0; timeIndex < Time.length; timeIndex++){
-                const startTime = Time[timeIndex].startTime.toDate();
-                const endTime = Time[timeIndex].endTime.toDate();
+                const startTime = new Date(Date.parse(Time[timeIndex].startTime));
+                const endTime = new Date(Date.parse(Time[timeIndex].endTime));
                 data.push({
                     title: Name,
                     color: Color,
