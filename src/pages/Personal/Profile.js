@@ -15,7 +15,8 @@ import ImgCrop from "antd-img-crop";
 
 const { Meta } = Card;
 
-export default (buttonStates) => {
+export default (props) => {
+    const buttonStates = props.states;
     const [fileList, setFileList] = useState([]);
     const [editUserName, setEditUserName] = useState(false);
     const [userNameModal, setUserNameModal] = useState(false);

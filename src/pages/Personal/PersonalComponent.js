@@ -71,7 +71,8 @@ export default (buttonStates, sendData) => {
         console.log("Testing");
     }
 
-    const personalComponent = () => buttonStates.userData ? <React.Fragment>
+    return (
+        buttonStates.userData ? <React.Fragment>
         <Layout>
             <Header className="header">
                 <div className="logo" />
@@ -83,7 +84,7 @@ export default (buttonStates, sendData) => {
             </Header>
             <Layout style={{
                 minHeight: '100vh',
-                background: "linear-gradient(90deg, #003D79, rgb(62, 151, 183) 500px)"
+                background: "linear-gradient(90deg, #003D79, rgb(62, 151, 183) 500px)",
             }}>
                 <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} className="select-bar">
                     <Menu theme="light" mode="inline">
@@ -100,9 +101,9 @@ export default (buttonStates, sendData) => {
                         </Menu.Item>
                     </Menu>
                 </Sider>
-                {BTLayerBar ? LayerBar(buttonStates) : <div />}
+                {BTLayerBar ? <LayerBar states={buttonStates} /> : <div />}
                 {Schedule ? <Demo appointments={buttonStates.userData}/>: <div />}
-                {BTProfile ? Profile(buttonStates) : <div />}
+                {BTProfile ? <Profile states={buttonStates}/> : <div />}
                 <Modal
                     title="Logout"
                     centered
@@ -123,9 +124,5 @@ export default (buttonStates, sendData) => {
             title="404"
             subTitle="There exist some error..."
         />
-    </React.Fragment>;
-    
-    return {
-        personalComponent
-    };
+    </React.Fragment>);
 };
