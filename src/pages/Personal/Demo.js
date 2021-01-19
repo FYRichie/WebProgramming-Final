@@ -4,6 +4,9 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
 import UserDataToDate from "./UserDataToDate";
+import ConvertCrossDays from "./ConvertCrossDays";
+import HandleAppointmentRepeat from "./HandleAppointmentRepeat";
+
 import {
 	Scheduler,
 	WeekView,
@@ -17,7 +20,8 @@ import {
 
 export default (props) => {
 	const today = new Date();
-	const convertedData = UserDataToDate(props.appointments)
+	const convertedData = HandleAppointmentRepeat(ConvertCrossDays(UserDataToDate(props.appointments)));
+	console.log(convertedData);
 	const [data, setData] = useState(convertedData);
 	const [currentDate, setCurrentDate] = useState(today);
 
@@ -90,7 +94,7 @@ export default (props) => {
 			<AppointmentTooltip
 				headerComponent={Header}
 				//showOpenButton
-				showDeleteButton
+				//showDeleteButton
 				//commendButtonComponent={CommandButton}
 			/>
 		</Scheduler>
