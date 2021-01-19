@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {Form, Input, Button, message} from "antd";
+import defaultPerson from "../../images/defaultPerson.png";
 
 const client = new WebSocket('ws://localhost:4000');
 
@@ -36,6 +37,7 @@ export default () => {
             message.error("Password certification has some mistake!");
         }
         else {
+            const current = new Date();
             const data = {
                 account: values.account,
                 password: values.password,
@@ -44,7 +46,10 @@ export default () => {
                 data: {
                     userName: values.account,
                     layer: [],
-                    somethingelse: {}
+                    somethingelse: {
+                        personPicture: defaultPerson,
+                        accountCreateTime: current.toUTCString()
+                    }
                 }
             }
             const msg = ['CreateAccount', data];

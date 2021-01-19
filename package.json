@@ -12,6 +12,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "antd": "^4.9.4",
+    "antd-img-crop": "^3.13.2",
     "bootstrap": "^4.5.3",
     "dotenv": "^8.2.0",
     "interact.js": "^1.2.8",

@@ -12,12 +12,6 @@ const app = express();
 const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
 
-/*if (!process.env.MONGO_URL){
-    console.log(__dirname);
-    console.log(process.env.NODE_ENV);
-    console.error('Missing MONGO_URL!!!');
-    process.exit(1);
-};*/
 const URL = 'mongodb+srv://b08901039:f1127EE1688@webprogramming.rimw2.mongodb.net/webprogramming-hw6?retryWrites=true&w=majority';
 
 mongoose.connect(URL, {  //need to change to process.env.MONGO_URL
@@ -143,13 +137,44 @@ db.once('open', () => {
                         if (res !== null && res.hasLogin){
                             console.log("Find user!Sending data...");
                             console.log(res);
-                            sendData(['success', res.data])
+                            sendData(['success', {
+                                ID: res.ID,
+                                data: res.data
+                            }])
                         }
                         else {
                             console.log("Wrong URL!");
                             sendData(['error']);
                         }
                     })
+                    break;
+                }
+                case 'save':{
+                    await UserInformation.findOneAndUpdate({
+                        ID: payload.ID
+                    }, {
+                        $set: {data: payload.data}
+                    }, {returnOriginal: false}).exec((err, res) => {
+                        if (err) throw err;
+
+                        if (res !== null) {
+                            console.log("Save success.");
+                            console.log(res);
+                            sendData(['save', 'success']);
+                        }
+                        else {
+                            console.log("Save failed.");
+                            sendData(['save', 'error']);
+                        }
+                    });
+                    break;
+                }
+                case 'logout':{
+                    await UserInformation.findOneAndUpdate({
+                        ID: payload
+                    }, {
+                        $set: {hasLogin: false}
+                    });
                 }
             };
         };
@@ -161,4 +186,3 @@ db.once('open', () => {
         console.log(`Listening on http://localhost:${PORT}`)
     });
 });
-
