@@ -60,6 +60,14 @@ export default (buttonStates) => {
         buttonStates.setSaved(null);
     }
 
+    if (buttonStates.Saved !== null){
+        setTimeout(() => {
+            if (buttonStates.Saved) message.success("Your data is successfully saved!");
+            else message.error("There are some error occured saving your data!");
+        }, 3000);
+        buttonStates.setSaved(null);
+    }
+
     if (!buttonStates.userData) return (
         <h1>
             Wrong URL!
