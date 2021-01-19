@@ -81,7 +81,10 @@ export default (buttonStates, sendData) => {
                     <Menu.Item key="2" icon={<LogoutOutlined />} onClick={clickLogout}/>
                 </Menu>
             </Header>
-            <Layout style={{minHeight: '100vh'}}>
+            <Layout style={{
+                minHeight: '100vh',
+                background: "linear-gradient(90deg, #003D79, rgb(62, 151, 183) 500px)"
+            }}>
                 <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} className="select-bar">
                     <Menu theme="light" mode="inline">
                         <Menu.Item 

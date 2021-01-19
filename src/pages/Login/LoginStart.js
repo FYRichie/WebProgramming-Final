@@ -1,13 +1,22 @@
 import {NavLink} from 'react-router-dom';
 import React ,{useState} from 'react';
-import {Form, Button, Input, message} from 'antd';
+import {Form, Button, Input, message, Image} from 'antd';
+import { 
+    UserOutlined
+} from "@ant-design/icons";
 import GoogleLogin from 'react-google-login';
 import "./Login.css";
+import LoginUser from "../../images/LoginUser.png";
 
 const client = new WebSocket('ws://localhost:4000');
 
 export default () => {
     const inputRef = React.createRef();
+    const pictureLayout = {
+        wrapperCol: {
+            offset: 9,
+        }
+    }
     const layout = {
         labelCol: {
           span: 8,
@@ -89,7 +98,22 @@ export default () => {
             onFinishFailed={onFinishFailed}
             ref={inputRef}
             className="form-block"
+            style={{
+                background: "linear-gradient(90deg, #003D79, rgb(62, 151, 183) 500px)",
+                height: window.innerHeight
+            }}
         >
+            <Form.Item
+                {...pictureLayout}
+            >
+                <Image 
+                    src={LoginUser}
+                    width={200}
+                    style={{
+                        marginTop: "50px"
+                    }}
+                />
+            </Form.Item>
             <Form.Item
                 label="Account"
                 name="account"

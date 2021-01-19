@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
-import {Form, Input, Button, message} from "antd";
+import {Form, Input, Button, message, Image} from "antd";
 import defaultPerson from "../../images/defaultPerson.png";
+import CreatePicture from "../../images/CreatePicture.png";
 
 const client = new WebSocket('ws://localhost:4000');
 
@@ -8,6 +9,11 @@ const idGenerator = () => ('_' + Math.random().toString(36).substr(2,16));
 
 export default () => {
     const inputRef = React.createRef();
+    const pictureLayout = {
+        wrapperCol: {
+            offset: 10
+        }
+    }
     const layout = {
         labelCol: {
           span: 8,
@@ -84,7 +90,22 @@ export default () => {
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             ref={inputRef}
+            style={{
+                background: "linear-gradient(90deg, #003D79, rgb(62, 151, 183) 500px)",
+                height: window.innerHeight
+            }}
         >
+            <Form.Item
+                {...pictureLayout}
+            >
+                <Image 
+                    src={CreatePicture}
+                    width={200}
+                    style={{
+                        marginTop: "50px"
+                    }}
+                />
+            </Form.Item>
             <Form.Item
                 label="Account"
                 name="account"
