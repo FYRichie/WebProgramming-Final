@@ -1,4 +1,4 @@
-import React, {useState, useCallback, memo} from 'react';
+import React, {useState, useCallback} from 'react';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
 import MoreIcon from '@material-ui/icons/MoreVert';
@@ -58,6 +58,7 @@ export default (props) => {
 			opacity: restProps.data.isSelected ? 1.0 : 0.0,
 		  }}
 		>
+		  {console.log(restProps)}
 		  {children}
 		</Appointments.Appointment>
 	  );
@@ -93,9 +94,6 @@ export default (props) => {
 			<Appointments appointmentComponent={Appointment}/>
 			<AppointmentTooltip
 				headerComponent={Header}
-				//showOpenButton
-				//showDeleteButton
-				//commendButtonComponent={CommandButton}
 			/>
 		</Scheduler>
 		</Paper>
