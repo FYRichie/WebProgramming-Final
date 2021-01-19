@@ -15,28 +15,35 @@ import Profile from "./Profile";
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
 
-export default (buttonStates) => {
+export default (buttonStates, sendData) => {
     const [collapsed, setCollapsed] = useState(true);
     const [logoutModal, setLogoutModal] = useState(false);
+    const [BTLayerBar, setBTLayerBar] = useState(false);
+    const [Schedule, setSchedule] = useState(false);
+    const [BTProfile, setBTProfile] = useState(false);
 
     const onCollapse = collapsed => {
         setCollapsed(collapsed);
     }
 
     const save = () => {
-        buttonStates.setBTSaveData(true);
+        sendData(["save", {
+            ID: buttonStates.userID,
+            data: buttonStates.userData
+        }])
+        buttonStates.setSaveLoading(true);
     }
 
     const viewSchedule = () => {
-        buttonStates.setBTLayerBar(!buttonStates.BTLayerBar);
-        buttonStates.setSchedule(true);
-        buttonStates.setBTProfile(false);
+        setBTLayerBar(!BTLayerBar);
+        setSchedule(true);
+        setBTProfile(false);
     }
 
     const viewProfile = () => {
-        buttonStates.setBTLayerBar(false);
-        buttonStates.setSchedule(false);
-        buttonStates.setBTProfile(true);
+        setBTLayerBar(false);
+        setSchedule(false);
+        setBTProfile(true);
     }
 
     const clickLogout = () => {
@@ -48,77 +55,68 @@ export default (buttonStates) => {
     }
 
     const comfirmLogout = () => {
-        buttonStates.setLogout(true);
         setLogoutModal(false);
+        sendData(['save', {
+            ID: buttonStates.userID,
+            data: buttonStates.userData
+        }]);
+        sendData(["logout", buttonStates.userID]);
+        window.location.href = "http://localhost:3000";
     }
 
     if (buttonStates.Saved !== null){
-        setTimeout(() => {
-            if (buttonStates.Saved) message.success("Your data is successfully saved!");
-            else message.error("There are some error occured saving your data!");
-        }, 3000);
         buttonStates.setSaved(null);
+        if (buttonStates.Saved) message.success("Your data is successfully saved!");
+        else message.error("There are some error occured saving your data!");
+        console.log("Testing");
     }
 
-    if (buttonStates.Saved !== null){
-        setTimeout(() => {
-            if (buttonStates.Saved) message.success("Your data is successfully saved!");
-            else message.error("There are some error occured saving your data!");
-        }, 3000);
-        buttonStates.setSaved(null);
-    }
-
-    if (!buttonStates.userData) return (
-        <h1>
-            Wrong URL!
-        </h1>
-    );
-    else {
-        return (
-            <React.Fragment>
-                <Layout>
-                    <Header className="header">
-                        <div className="logo" />
-                        <Menu theme="dark" mode="horizontal" style={{float: "right"}}>
-                            {buttonStates.SaveLoading ? <Spin />:<Menu.Item key="3" icon={<SaveOutlined />} onClick={save}/>}
-                            <Menu.Item key="1" icon={<UserOutlined />} onClick={viewProfile}/>
-                            <Menu.Item key="2" icon={<LogoutOutlined />} onClick={clickLogout}/>
-                        </Menu>
-                    </Header>
-                    <Layout style={{minHeight: '100vh'}}>
-                        <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} className="select-bar">
-                            <Menu theme="light" mode="inline">
-                                <Menu.Item 
-                                    key="1" 
-                                    icon={<ScheduleOutlined />} 
-                                    onClick={viewSchedule}
-                                    style={{
-                                        display: "flex",
-                                        alignItems: "center"
-                                    }}
-                                >
-                                    Schedule List
-                                </Menu.Item>
-                            </Menu>
-                        </Sider>
-                        {buttonStates.BTLayerBar ? LayerBar(buttonStates) : <div />}
-                        {buttonStates.Schedule ? <Demo appointments={buttonStates.userData}/>: <div />}
-                        {buttonStates.BTProfile ? Profile(buttonStates) : <div />}
-                        <Modal
-                            title="Logout"
-                            centered
-                            visible={logoutModal}
-                            onCancel={cancelLogout}
-                            footer={[
-                                <Button onClick={cancelLogout}>Cancel</Button>,
-                                <Button type="primary" onClick={comfirmLogout}>Yes</Button>
-                            ]}
+    const personalComponent = () => buttonStates.userData ? <React.Fragment>
+        <Layout>
+            <Header className="header">
+                <div className="logo" />
+                <Menu theme="dark" mode="horizontal" style={{float: "right"}}>
+                    {buttonStates.SaveLoading ? <Spin />:<Menu.Item key="3" icon={<SaveOutlined />} onClick={save}/>}
+                    <Menu.Item key="1" icon={<UserOutlined />} onClick={viewProfile}/>
+                    <Menu.Item key="2" icon={<LogoutOutlined />} onClick={clickLogout}/>
+                </Menu>
+            </Header>
+            <Layout style={{minHeight: '100vh'}}>
+                <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} className="select-bar">
+                    <Menu theme="light" mode="inline">
+                        <Menu.Item 
+                            key="1" 
+                            icon={<ScheduleOutlined />} 
+                            onClick={viewSchedule}
+                            style={{
+                                display: "flex",
+                                alignItems: "center"
+                            }}
                         >
-                            <p>Are you sure you want to logout?</p>
-                        </Modal>
-                    </Layout>
-                </Layout>
-            </React.Fragment>
-        );
-    }
+                            Schedule List
+                        </Menu.Item>
+                    </Menu>
+                </Sider>
+                {BTLayerBar ? LayerBar(buttonStates) : <div />}
+                {Schedule ? <Demo appointments={buttonStates.userData}/>: <div />}
+                {BTProfile ? Profile(buttonStates) : <div />}
+                <Modal
+                    title="Logout"
+                    centered
+                    visible={logoutModal}
+                    onCancel={cancelLogout}
+                    footer={[
+                        <Button onClick={cancelLogout}>Cancel</Button>,
+                        <Button type="primary" onClick={comfirmLogout}>Yes</Button>
+                    ]}
+                >
+                    <p>Are you sure you want to logout?</p>
+                </Modal>
+            </Layout>
+        </Layout>
+    </React.Fragment> : <h1>Wrong Url!</h1>;
+    
+    return {
+        personalComponent
+    };
 };

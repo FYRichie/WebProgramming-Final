@@ -8,44 +8,27 @@ const client = new WebSocket('ws://localhost:4000');
 function PersonalPage(){
     const [hasAskData, setHasAskData] = useState(false);
     const [userData, setUserData] = useState(false);  //all data of specify user from DB
-    const [BTProfile, setBTProfile] = useState(false);
-    const [BTLayerBar, setBTLayerBar] = useState(false);
-    const [BTLogout, setBTLogout] = useState(false);
-    const [BTAddLayer, setBTAddLayer] = useState(false);
-    const [BTSaveData, setBTSaveData] = useState(false);
     const [Saved, setSaved] = useState(null);
     const [SaveLoading, setSaveLoading] = useState(false);
     const [userID, setUserID] = useState("");
-    const [Schedule, setSchedule] = useState(false);
-    const [Logout, setLogout] = useState(false);
 
     const buttonStates = {
-        "BTProfile": BTProfile,
-        "setBTProfile": setBTProfile,
-        "BTLayerBar": BTLayerBar,
-        "setBTLayerBar": setBTLayerBar,
-        "BTLogout": BTLogout,
-        "setBTLogout": setBTLogout,
         "userData": userData,
         "setUserData": setUserData,
-        "BTAddLayer": BTAddLayer,
-        "setBTAddLayer": setBTAddLayer,
-        "BTSaveData": BTSaveData,
-        "setBTSaveData": setBTSaveData,
         "Saved": Saved,
         "setSaved": setSaved,
         "SaveLoading": SaveLoading,
         "setSaveLoading": setSaveLoading,
-        "Schedule": Schedule,
-        "setSchedule": setSchedule,
-        "Logout": Logout,
-        "setLogout": setLogout
+        "userID": userID,
+        "setUserID": setUserID
     }
 
     const servingUrl = window.location.pathname;
     const sendData = (data) => {
         client.send(JSON.stringify(data));
     }
+
+    const {personalComponent} = PersonalComponent(buttonStates, sendData);
 
     if (servingUrl.length > 1){
         if (servingUrl[10] === "_"){
@@ -78,35 +61,12 @@ function PersonalPage(){
                     }
                 }
             }
-
-            if (BTSaveData){
-                sendData(['save', {
-                    ID: userID,
-                    data: userData
-                }]);
-                setSaveLoading(true);
-                setBTSaveData(false);
-            }
-
-            if (Logout){
-                sendData(['save', {
-                    ID: userID,
-                    data: userData
-                }]);
-                sendData(["logout", userID]);
-                setLogout(false);
-                // window.location = ``
-                console.log(window.location);
-                window.location.href = "http://localhost:3000";
-            }
         }
     }
 
     return (
         <BrowserRouter>
-            <Route path="/Personal/" component={() => {
-                return PersonalComponent(buttonStates)
-            }}></Route>
+            {<Route path="/Personal/" component={personalComponent}></Route> }
         </BrowserRouter>
     );
 }

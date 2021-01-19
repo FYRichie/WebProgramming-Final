@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { Menu, Button, Input, Modal, message, Col } from "antd";
+import { Menu, Button, Input, Modal, message } from "antd";
 import {
-    PlusOutlined,
-    UnorderedListOutlined
+    PlusOutlined
 } from "@ant-design/icons";
 import "./PersonalPage.css";
 import Layer from "./Layer";
@@ -49,7 +48,7 @@ export default (buttonStates) => {
             }
             buttonStates.setUserData(newUserData);
             setModalVisible(false);
-            console.log(buttonStates.userData);
+            //console.log(buttonStates.userData);
         }
     }
 

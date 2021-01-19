@@ -8,7 +8,6 @@ import {
 } from "@ant-design/icons"
 import Events from "./Events";
 import TimeList from "./TimeList";
-import UserDataToDate from "./UserDataToDate";
 
 const {SubMenu} = Menu;
 const {RangePicker} = DatePicker;
@@ -66,8 +65,6 @@ export default (ele, index, buttonStates) => {
 
             buttonStates.setUserData(newUserData);
             setAddModalVisible(false);
-
-            console.log(UserDataToDate(buttonStates.userData));
         }
     }
 
@@ -243,7 +240,6 @@ export default (ele, index, buttonStates) => {
                     }}
                 />
             </ul>
-            {/*add selected */}
         </SubMenu>
     );
 }
