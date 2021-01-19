@@ -9,7 +9,7 @@ import "antd/dist/antd.css"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./PersonalPage.css";
 import LayerBar from "./LayerBar";
-import Week from "./Week";
+import Demo from "./Demo";
 
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
@@ -45,16 +45,25 @@ export default (buttonStates) => {
                     </Header>
                     <Layout style={{minHeight: '100vh'}}>
                         <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} className="select-bar">
-                            <div className="logo"/>
                             <Menu theme="light" mode="inline">
-                                <Menu.Item key="1" icon={<ScheduleOutlined />} onClick={() => {
-                                    buttonStates.setBTSchedule(!buttonStates.BTSchedule);
-                                }}>
+                                <Menu.Item 
+                                    key="1" 
+                                    icon={<ScheduleOutlined />} 
+                                    onClick={() => {
+                                        buttonStates.setBTSchedule(!buttonStates.BTSchedule);
+                                        //console.log(buttonStates.userData);
+                                    }}
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center"
+                                    }}
+                                >
                                     Schedule List
                                 </Menu.Item>
                             </Menu>
                         </Sider>
                         {layerBlock()}
+                        <Demo appointments={buttonStates.userData}/>
                     </Layout>
                 </Layout>
             </React.Fragment>
