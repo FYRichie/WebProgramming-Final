@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import TextEditor from "./TextEditor";
+import TimelistComponent from "./TimelistComponent";  
 
 const { Meta } = Card;
 
@@ -208,9 +209,9 @@ export default (props) => {
                                 {layer.event.map( (element, eventIndex) => {
                                     return(
                                         <Card type="inner" title={`${element.eventName}-${layer.layerName}`} extra={<a href="#" onClick={() => {showEditDrawer(layerIndex, eventIndex)}}>More</a>} headStyle={{color: layer.layerColor}}>
-                                            {`from ${(new Date(Date.parse(element.eventTime[0].startTime))).toString().slice(0, 
-                                                (new Date(Date.parse(element.eventTime[0].startTime))).toString().length - 15)}`}<br/>{`to ${(new Date(Date.parse(element.eventTime[0].endTime))).toString().slice(0,
-                                                (new Date(Date.parse(element.eventTime[0].endTime))).toString().length - 15)}`}
+                                            {element.eventTime.map((Time, TimeIndex) => {
+                                                return TimelistComponent(Time, TimeIndex);
+                                            })}
                                         </Card>
                                     )
                                 })}
