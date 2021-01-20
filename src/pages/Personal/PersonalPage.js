@@ -14,6 +14,7 @@ function PersonalPage(){
     const [BTLayerBar, setBTLayerBar] = useState(false);
     const [Schedule, setSchedule] = useState(false);
     const [BTProfile, setBTProfile] = useState(false);
+    const [editDrawerVisible, setEditDrawerVisible] = useState(false);
 
     const buttonStates = {
         "userData": userData,
@@ -29,7 +30,9 @@ function PersonalPage(){
         "Schedule": Schedule,
         "setSchedule": setSchedule,
         "BTProfile": BTProfile,
-        "setBTProfile": setBTProfile
+        "setBTProfile": setBTProfile,
+        "editDrawerVisible": editDrawerVisible,
+        "setEditDrawerVisible": setEditDrawerVisible
     }
 
     const servingUrl = window.location.pathname;

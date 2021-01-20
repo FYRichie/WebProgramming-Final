@@ -1,4 +1,4 @@
-import { Card, Input, Modal, Button, Upload, message, Tag } from 'antd';
+import { Card, Input, Modal, Button, Upload, message, Tag, Drawer } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
 import React,{ useState } from 'react';
 import { 
@@ -71,11 +71,26 @@ export default (props) => {
         }
     };
 
+    const showEditDrawer = () => {
+        buttonStates.setEditDrawerVisible(true);
+    }
+
+    const closeEditDrawer = () => {
+        buttonStates.setEditDrawerVisible(false);
+    }
+
     return (
         <div
             style={{
                 display: "flex",
-                flexDirection: "row"
+                flexDirection: "row",
+                position: "absolute",
+                height: window.innerHeight,
+                overflow: "hidden",
+                textAlign: "center",
+                background: "transparent",
+                borderRadius: "2px",
+                right: "0px"
             }}
         >
             <div 
@@ -129,32 +144,52 @@ export default (props) => {
             </div>
             <div
                 style={{
-                    margin: "20px 0px 0px 20px"
+                    margin: "20px 20px 0px 20px"
                 }}
             >
-                <Card
-                    hoverable
-                    onClick={() => {
-                        window.open("http://localhost:3000");
-                    }}
-                >
+                <Card hoverable>
                     <FieldTimeOutlined style={{marginRight: "3px"}}/>
                     When you create your account : {buttonStates.userData.somethingelse.accountCreateTime}
                 </Card>
-                {
-                    buttonStates.userData.layer.map(layer => {
-                    return(  
-                        <Card title={' '} style={{width: '40%'}} headStyle={{backgroundColor: layer.layerColor}}>
-                            {layer.event.map( element => {
-                                return(
-                                    <Card type="inner" title={`${element.eventName}-${layer.layerName}`} extra={<a href="#">More</a>} headStyle={{color: layer.layerColor}}>
-                                        {`from ${new Date(Date.parse(element.eventTime[0].startTime))} to ${new Date(Date.parse(element.eventTime[0].endTime))}`}
-                                    </Card>
-                                )
-                            })}
-                        </Card>
-                    )
-                })}
+                <div
+                    style={{
+                        maxWidth: "900px",
+                        overflow: "auto",
+                        display: "flex",
+                        flexDirection: "row",
+                        marginTop: "17px"
+                    }}
+                >
+                    {buttonStates.userData.layer.map(layer => {
+                        return(  
+                            <Card 
+                                title={' '} 
+                                style={{
+                                    width: '40%',
+                                    minWidth: "250px",
+                                    marginRight: "17px"
+                                }} 
+                                headStyle={{
+                                    backgroundColor: layer.layerColor
+                                }}
+                                bodyStyle={{
+                                    maxHeight: "460px",
+                                    overflow: "auto"
+                                }}
+                            >
+                                {layer.event.map( (element, index) => {
+                                    return(
+                                        <Card type="inner" title={`${element.eventName}-${layer.layerName}`} extra={<a href="#" onClick={showEditDrawer}>More</a>} headStyle={{color: layer.layerColor}}>
+                                            {`from ${(new Date(Date.parse(element.eventTime[0].startTime))).toString().slice(0, 
+                                                (new Date(Date.parse(element.eventTime[0].startTime))).toString().length - 15)}`}<br/>{`to ${(new Date(Date.parse(element.eventTime[0].endTime))).toString().slice(0,
+                                                (new Date(Date.parse(element.eventTime[0].endTime))).toString().length - 15)}`}
+                                        </Card>
+                                    )
+                                })}
+                            </Card>
+                        )
+                    })}
+                </div>
             </div>
             <Modal
                 title="Changing your name..."
@@ -168,6 +203,20 @@ export default (props) => {
             >
                 <p>Are you sure you want to change your name?</p>
             </Modal>
+            <Drawer
+                    placement="right"
+                    closable={true}
+                    onClose={closeEditDrawer}
+                    visible={buttonStates.editDrawerVisible}
+                    getContainer={false}
+                    style={{
+                        position: "absolute",
+                        right: "0px",
+                        backgroundColor: "green"
+                    }}
+                >
+                {/*add ckeditor */}
+            </Drawer>
         </div>
     );
 }
