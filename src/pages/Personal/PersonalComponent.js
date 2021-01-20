@@ -54,9 +54,9 @@ export default (buttonStates, sendData) => {
         setLogoutModal(false);
     }
 
-    const comfirmLogout = () => {
+    const comfirmLogout = async() => {
         setLogoutModal(false);
-        sendData(['save', {
+        await sendData(['save', {
             ID: buttonStates.userID,
             data: buttonStates.userData
         }]);
