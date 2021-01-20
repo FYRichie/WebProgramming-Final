@@ -16,6 +16,7 @@
     "antd": "^4.9.4",
     "antd-img-crop": "^3.13.2",
     "bootstrap": "^4.5.3",
+    "caniuse-lite": "^1.0.30001178",
     "ckeditor": "^4.12.1",
     "dotenv": "^8.2.0",
     "gg-editor": "^3.1.3",
@@ -32,7 +33,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cd server && node server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
