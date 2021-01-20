@@ -53,7 +53,8 @@ export default (ele, index, buttonStates) => {
                 event: [...ele.event, {
                     eventName: eventNameRef.current.state.value,
                     eventTime: eventTime,
-                    eventRepeatEveryweek: eventRepeatEveryweek
+                    eventRepeatEveryweek: eventRepeatEveryweek,
+                    eventData: {},
                 }]
             }
 
@@ -128,11 +129,11 @@ export default (ele, index, buttonStates) => {
                 color: ele.layerColor
             }}
         >
-            <hr 
+            {buttonStates.userData.layer[index].event.length > 0 ? <hr 
                 style={{
                     margin: "0px 3px 2.5px 3px"
                 }}
-            />
+            /> : null}
             {events()}
             <Modal
                 title="Add an event!"
@@ -198,11 +199,11 @@ export default (ele, index, buttonStates) => {
             >
                 <p>Are you sure you want to delete this layer?</p>
             </Modal>
-            <hr
+            {buttonStates.userData.layer[index].event.length > 0 ? <hr
                 style={{
                     margin: "2.5px 3px 0px 3px"
                 }}
-            />
+            /> : null}
             <ul 
                 style={{
                     display: "flex"

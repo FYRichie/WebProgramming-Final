@@ -11,6 +11,10 @@ function PersonalPage(){
     const [Saved, setSaved] = useState(null);
     const [SaveLoading, setSaveLoading] = useState(false);
     const [userID, setUserID] = useState("");
+    const [BTLayerBar, setBTLayerBar] = useState(false);
+    const [Schedule, setSchedule] = useState(false);
+    const [BTProfile, setBTProfile] = useState(false);
+    const [editDrawerVisible, setEditDrawerVisible] = useState(false);
 
     const buttonStates = {
         "userData": userData,
@@ -21,6 +25,14 @@ function PersonalPage(){
         "setSaveLoading": setSaveLoading,
         "userID": userID,
         "setUserID": setUserID,
+        "BTLayerBar": BTLayerBar,
+        "setBTLayerBar": setBTLayerBar,
+        "Schedule": Schedule,
+        "setSchedule": setSchedule,
+        "BTProfile": BTProfile,
+        "setBTProfile": setBTProfile,
+        "editDrawerVisible": editDrawerVisible,
+        "setEditDrawerVisible": setEditDrawerVisible
     }
 
     const servingUrl = window.location.pathname;

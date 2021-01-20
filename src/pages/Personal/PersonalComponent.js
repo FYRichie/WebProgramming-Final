@@ -22,9 +22,6 @@ const {Meta} = Card;
 export default (buttonStates, sendData) => {
     const [collapsed, setCollapsed] = useState(true);
     const [logoutModal, setLogoutModal] = useState(false);
-    const [BTLayerBar, setBTLayerBar] = useState(false);
-    const [Schedule, setSchedule] = useState(false);
-    const [BTProfile, setBTProfile] = useState(false);
 
     const onCollapse = collapsed => {
         setCollapsed(collapsed);
@@ -39,15 +36,15 @@ export default (buttonStates, sendData) => {
     }
 
     const viewSchedule = () => {
-        setBTLayerBar(!BTLayerBar);
-        setSchedule(true);
-        setBTProfile(false);
+        buttonStates.setBTLayerBar(!buttonStates.BTLayerBar);
+        buttonStates.setSchedule(true);
+        buttonStates.setBTProfile(false);
     }
 
     const viewProfile = () => {
-        setBTLayerBar(false);
-        setSchedule(false);
-        setBTProfile(true);
+        buttonStates.setBTLayerBar(false);
+        buttonStates.setSchedule(false);
+        buttonStates.setBTProfile(true);
     }
 
     const clickLogout = () => {
@@ -126,10 +123,10 @@ export default (buttonStates, sendData) => {
                         </Menu.Item>
                     </Menu>
                 </Sider>
-                {!BTLayerBar && !Schedule && !BTProfile ? def : null}
-                {BTLayerBar ? <LayerBar states={buttonStates} /> : null}
-                {Schedule ? <Demo appointments={buttonStates.userData}/> : null}
-                {BTProfile ? <Profile states={buttonStates}/> : null}
+                {!buttonStates.BTLayerBar && !buttonStates.Schedule && !buttonStates.BTProfile ? def : null}
+                {buttonStates.BTLayerBar ? <LayerBar states={buttonStates} /> : null}
+                {buttonStates.Schedule ? <Demo appointments={buttonStates.userData}/> : null}
+                {buttonStates.BTProfile ? <Profile states={buttonStates}/> : null}
                 <Modal
                     title="Logout"
                     centered
