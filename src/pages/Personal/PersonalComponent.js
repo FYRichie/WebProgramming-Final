@@ -77,7 +77,7 @@ export default (buttonStates, sendData) => {
     const Description = <>This website is for you to schedule your busy days.
         <br />Also you can make some notes for your schedules.
         <br />Hope you like the design.    
-        <br />by 黃曜廷 傅譽 郭尚睿"
+        <br />by 黃曜廷 傅譽 郭尚睿
         <br />2020-01-21
     </>
     const def = <Card
