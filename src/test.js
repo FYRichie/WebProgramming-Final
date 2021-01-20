@@ -1,11 +1,14 @@
-import { Result, Button } from 'antd';
-import { SmileOutlined } from '@ant-design/icons';
+import { Card } from 'antd';
+
+const { Meta } = Card;
 
 ReactDOM.render(
-  <Result
-    icon={<SmileOutlined />}
-    title="Great, we have done all the operations!"
-    extra={<Button type="primary">Next</Button>}
-  />,
+  <Card
+    hoverable
+    style={{ width: 240 }}
+    cover={<img alt="example" src="https://os.alipayobjects.com/rmsportal/QBnOOoLaAfKPirc.png" />}
+  >
+    <Meta title="Europe Street beat" description="www.instagram.com" />
+  </Card>,
   mountNode,
 );
