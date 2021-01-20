@@ -38,9 +38,6 @@ export default (props) => {
 			{...restProps}
 			appointmentData={appointmentData}
 		>
-			<IconButton onClick={handleClickMore(appointmentData)}>
-				<MoreIcon/>
-			</IconButton>
 		</AppointmentTooltip.Header>
 		)
 	);
