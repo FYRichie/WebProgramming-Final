@@ -13,6 +13,7 @@ import Demo from "./Demo";
 import Profile from "./Profile";
 import Producer from "../../images/Producer.png"
 import { Description } from "@material-ui/icons";
+import TextEditor from "./TextEditor";
 
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
