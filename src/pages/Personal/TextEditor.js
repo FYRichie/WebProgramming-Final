@@ -10,7 +10,9 @@ const TextEditor  = (props) =>{
         const data = props.data;
     }
     return (
-        <div>
+        <div
+            style={{width: '640px'}}
+        >
             <CKEditor
                 editor={ ClassicEditor }
                 data="<p>type your note here...</p>"
