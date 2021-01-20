@@ -41,9 +41,8 @@ node ./index.js
 * express
 * mongoose
 * WebSocket
-
 ### 專題製作心得
-
+* 傅譽:對github的使用很不熟悉，在檔案版本更新與上傳的時候出了非常多的問題，且heroku也有許多無法解決的bug。在處理多檔案的互相引用時，react state之間的轉換十分複雜。透過這次製作較大型程式專題的機會，也讓我更熟悉前後端的運作了。
 
 ### 使用之第三方套件、框架、程式碼
 **frontend**
