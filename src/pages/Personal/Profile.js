@@ -90,7 +90,7 @@ export default (props) => {
                 textAlign: "center",
                 background: "transparent",
                 borderRadius: "2px",
-                right: "0px"
+                marginLeft: "80px"
             }}
         >
             <div 
@@ -137,7 +137,7 @@ export default (props) => {
                     <Upload {...uploadProps}>
                         {fileList.length < 4 ? <Button 
                             icon={<UploadOutlined />} 
-                            style={{margin: "5px 0px 0px 17px"}}
+                            style={{margin: "5px 0px 0px 0px"}}
                         >Choose you own photo!</Button> : null}
                     </Upload>
                 </ImgCrop>
@@ -207,13 +207,9 @@ export default (props) => {
                     placement="right"
                     closable={true}
                     onClose={closeEditDrawer}
+                    width={800}
                     visible={buttonStates.editDrawerVisible}
                     getContainer={false}
-                    style={{
-                        position: "absolute",
-                        right: "0px",
-                        backgroundColor: "green"
-                    }}
                 >
                 {/*add ckeditor */}
             </Drawer>
