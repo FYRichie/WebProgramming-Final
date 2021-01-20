@@ -17,6 +17,10 @@ const timeOverlapping = (interval1, interval2) => {
         || interval1.endTime.isBetween(interval2.startTime, interval2.endTime)
         || interval2.startTime.isBetween(interval1.startTime, interval1.endTime)
         || interval2.endTime.isBetween(interval1.startTime, interval1.endTime)
+        || interval1.startTime === interval2.startTime
+        || interval1.startTime === interval2.endTime
+        || interval1.endTime === interval2.startTime
+        || interval1.endTime === interval2.endTime
 };
 
 export default (ele, index, buttonStates) => {

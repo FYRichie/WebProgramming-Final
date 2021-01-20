@@ -8,6 +8,7 @@ import {
 } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
 import TextEditor from "./TextEditor";
+import TimelistComponent from "./TimelistComponent";  
 
 const { Meta } = Card;
 
@@ -16,7 +17,12 @@ export default (props) => {
     const [fileList, setFileList] = useState([]);
     const [editUserName, setEditUserName] = useState(false);
     const [userNameModal, setUserNameModal] = useState(false);
+    const layerIndex = buttonStates.layerIndex;
+    const setLayerIndex = buttonStates.setLayerIndex;
+    const eventIndex = buttonStates.eventIndex;
+    const setEventIndex = buttonStates.setEventIndex;
     const userNameRef = React.useRef();
+    const {EditorComponent, data} = TextEditor(buttonStates, layerIndex, eventIndex);
 
     const changeUserName = () => {
         buttonStates.setUserData({
@@ -71,12 +77,37 @@ export default (props) => {
         }
     };
 
-    const showEditDrawer = () => {
+    const showEditDrawer = (LI, EI) => {
         buttonStates.setEditDrawerVisible(true);
+        setLayerIndex(LI);
+        setEventIndex(EI);
     }
 
     const closeEditDrawer = () => {
         buttonStates.setEditDrawerVisible(false);
+        console.log(data);
+        const _event = buttonStates.userData.layer[layerIndex].event[eventIndex];
+        const _layer = buttonStates.userData.layer[layerIndex];
+        const _userData = buttonStates.userData;
+        const newEvent = {
+            eventName: _event.eventName,
+            eventTime: _event.eventTime,
+            eventRepeatEveryweek: _event.eventRepeatEveryweek,
+            eventData: data
+        }
+        const newLayer = {
+            layerName: _layer.layerName,
+            layerColor: _layer.layerColor,
+            layerSelected: _layer.layerSelected,
+            event: [..._layer.event.slice(0, eventIndex), newEvent, ..._layer.event.slice(eventIndex + 1, _layer.event.length)]
+        }
+
+        const newUserData = {
+            userName: _userData.userName,
+            layer: [..._userData.layer.slice(0, layerIndex), newLayer, ..._userData.layer.slice(layerIndex + 1, _userData.layer.length)],
+            somethingelse: _userData.somethingelse
+        }
+        buttonStates.setUserData(newUserData);
     }
 
     return (
@@ -84,13 +115,11 @@ export default (props) => {
             style={{
                 display: "flex",
                 flexDirection: "row",
-                position: "absolute",
                 height: window.innerHeight,
                 overflow: "hidden",
                 textAlign: "center",
                 background: "transparent",
                 borderRadius: "2px",
-                marginLeft: "80px"
             }}
         >
             <div 
@@ -160,7 +189,7 @@ export default (props) => {
                         marginTop: "17px"
                     }}
                 >
-                    {buttonStates.userData.layer.map(layer => {
+                    {buttonStates.userData.layer.map((layer, layerIndex) => {
                         return(  
                             <Card 
                                 title={' '} 
@@ -177,12 +206,12 @@ export default (props) => {
                                     overflow: "auto"
                                 }}
                             >
-                                {layer.event.map( (element, index) => {
+                                {layer.event.map( (element, eventIndex) => {
                                     return(
-                                        <Card type="inner" title={`${element.eventName}-${layer.layerName}`} extra={<a href="#" onClick={showEditDrawer}>More</a>} headStyle={{color: layer.layerColor}}>
-                                            {`from ${(new Date(Date.parse(element.eventTime[0].startTime))).toString().slice(0, 
-                                                (new Date(Date.parse(element.eventTime[0].startTime))).toString().length - 15)}`}<br/>{`to ${(new Date(Date.parse(element.eventTime[0].endTime))).toString().slice(0,
-                                                (new Date(Date.parse(element.eventTime[0].endTime))).toString().length - 15)}`}
+                                        <Card type="inner" title={`${element.eventName}-${layer.layerName}`} extra={<a href="#" onClick={() => {showEditDrawer(layerIndex, eventIndex)}}>More</a>} headStyle={{color: layer.layerColor}}>
+                                            {element.eventTime.map((Time, TimeIndex) => {
+                                                return TimelistComponent(Time, TimeIndex);
+                                            })}
                                         </Card>
                                     )
                                 })}
@@ -211,7 +240,7 @@ export default (props) => {
                     visible={buttonStates.editDrawerVisible}
                     getContainer={false}
                 >
-                <TextEditor />
+                {EditorComponent}
             </Drawer>
         </div>
     );

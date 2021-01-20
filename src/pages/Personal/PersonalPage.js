@@ -15,6 +15,8 @@ function PersonalPage(){
     const [Schedule, setSchedule] = useState(false);
     const [BTProfile, setBTProfile] = useState(false);
     const [editDrawerVisible, setEditDrawerVisible] = useState(false);
+    const [layerIndex, setLayerIndex] = useState(0);
+    const [eventIndex, setEventIndex] = useState(0);
 
     const buttonStates = {
         "userData": userData,
@@ -32,7 +34,11 @@ function PersonalPage(){
         "BTProfile": BTProfile,
         "setBTProfile": setBTProfile,
         "editDrawerVisible": editDrawerVisible,
-        "setEditDrawerVisible": setEditDrawerVisible
+        "setEditDrawerVisible": setEditDrawerVisible,
+        "layerIndex": layerIndex,
+        "setLayerIndex": setLayerIndex,
+        "eventIndex": eventIndex,
+        "setEventIndex": setEventIndex
     }
 
     const servingUrl = window.location.pathname;

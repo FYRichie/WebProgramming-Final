@@ -1,29 +1,37 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
-const TextEditor  = (props) =>{
-    if(props.data === undefined) {
-        const data = 'Type your note here...';
+const TextEditor  = (buttonStates, layerIndex, eventIndex) =>{
+    const [data, setData] = useState(buttonStates.userData.layer[layerIndex].event[eventIndex].eventData);
+    const editing = (event, editor) => {
+        setData(editor.getData());
     }
-    else {
-        const data = props.data;
-    }
-    return (
+    
+    const EditorComponent = (<div
+        style={{
+            width: '640px',
+        }}
+    >
         <div
-            style={{width: '640px'}}
+            style={{
+                color: buttonStates.userData.layer[layerIndex].layerColor,
+                fontSize: "50px",
+                fontFamily: "fantasy"
+            }}
         >
-            <CKEditor
-                editor={ ClassicEditor }
-                data="<p>type your note here...</p>"
-                onReady={editor => {console.log(editor)}}
-                onChange={ ( event, editor ) => {
-                    const changed_data = editor.getData();
-                    console.log({ changed_data });
-                } }
-            />
+            {buttonStates.userData.layer[layerIndex].event[eventIndex].eventName}
         </div>
-    );
+        <CKEditor
+            editor={ ClassicEditor }
+            data={buttonStates.userData.layer[layerIndex].event[eventIndex].eventData}
+            onChange={editing}
+        />
+    </div>);
+    return {
+        EditorComponent,
+        data
+    };
     
 }
 
