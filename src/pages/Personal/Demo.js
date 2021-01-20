@@ -11,7 +11,6 @@ import {
 	Scheduler,
 	WeekView,
 	Appointments,
-	AppointmentForm,
 	AppointmentTooltip,
 	TodayButton,
 	Toolbar,
@@ -21,7 +20,6 @@ import {
 export default (props) => {
 	const today = new Date();
 	const convertedData = HandleAppointmentRepeat(ConvertCrossDays(UserDataToDate(props.appointments)));
-	console.log(convertedData);
 	const [data, setData] = useState(convertedData);
 	const [currentDate, setCurrentDate] = useState(today);
 

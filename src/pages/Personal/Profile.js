@@ -1,9 +1,5 @@
-import { Card, Input, Modal, Button, Upload, message } from 'antd';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import { Card, Input, Modal, Button, Upload, message, Tag } from 'antd';
+import { EllipsisOutlined } from '@ant-design/icons';
 
 import React,{ useState } from 'react';
 import { 
@@ -12,6 +8,7 @@ import {
     EditOutlined
 } from "@ant-design/icons";
 import ImgCrop from "antd-img-crop";
+import { ContactSupportOutlined } from '@material-ui/icons';
 
 const { Meta } = Card;
 
@@ -145,33 +142,20 @@ export default (buttonStates) => {
                     <FieldTimeOutlined style={{marginRight: "3px"}}/>
                     When you create your account : {buttonStates.userData.somethingelse.accountCreateTime}
                 </Card>
-                {/* {buttonStates.userData.map(element => {
-                    <Card maxWidth="345">
-                        <CardActionArea>
-                            <CardMedia
-                                component="img"
-                                alt="Contemplative Reptile"
-                                height="140"
-                                image="/static/images/cards/contemplative-reptile.jpg"
-                                title={element.title}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {element.title}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {element.startDate}
-                                    {element.endDate}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                            <Button size="small" color="primary">
-                                Learn More
-                            </Button>
-                        </CardActions>
-                    </Card>
-                })} */}
+                {
+                    buttonStates.userData.layer.map(layer => {
+                    return(  
+                        <Card title={' '} style={{width: '40%'}} headStyle={{backgroundColor: layer.layerColor}}>
+                            {layer.event.map( element => {
+                                return(
+                                    <Card type="inner" title={`${element.eventName}-${layer.layerName}`} extra={<a href="#">More</a>} headStyle={{color: layer.layerColor}}>
+                                        {`from ${new Date(Date.parse(element.eventTime[0].startTime))} to ${new Date(Date.parse(element.eventTime[0].endTime))}`}
+                                    </Card>
+                                )
+                            })}
+                        </Card>
+                    )
+                })}
             </div>
             <Modal
                 title="Changing your name..."
