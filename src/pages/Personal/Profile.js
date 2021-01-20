@@ -4,7 +4,6 @@ import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-
 import React,{ useState } from 'react';
 import { 
     FieldTimeOutlined,
@@ -140,39 +139,11 @@ export default (props) => {
                     hoverable
                     onClick={() => {
                         window.open("http://localhost:3000");
-                        //newWindow.focus();
                     }}
                 >
                     <FieldTimeOutlined style={{marginRight: "3px"}}/>
                     When you create your account : {buttonStates.userData.somethingelse.accountCreateTime}
                 </Card>
-                {/* {buttonStates.userData.map(element => {
-                    <Card maxWidth="345">
-                        <CardActionArea>
-                            <CardMedia
-                                component="img"
-                                alt="Contemplative Reptile"
-                                height="140"
-                                image="/static/images/cards/contemplative-reptile.jpg"
-                                title={element.title}
-                            />
-                            <CardContent>
-                                <Typography gutterBottom variant="h5" component="h2">
-                                    {element.title}
-                                </Typography>
-                                <Typography variant="body2" color="textSecondary" component="p">
-                                    {element.startDate}
-                                    {element.endDate}
-                                </Typography>
-                            </CardContent>
-                        </CardActionArea>
-                        <CardActions>
-                            <Button size="small" color="primary">
-                                Learn More
-                            </Button>
-                        </CardActions>
-                    </Card>
-                })} */}
             </div>
             <Modal
                 title="Changing your name..."
