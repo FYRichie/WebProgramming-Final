@@ -13,7 +13,7 @@ const time = (arr) => {
             style={{
                 display: "flex",
                 flexDirection: "column",
-                overflow: "scroll",
+                overflow: "auto",
                 alignItems: "center",
                 marginBottom: "0px",
                 height: "32px",
@@ -67,7 +67,7 @@ export default (timeArr) => {
                 width: "438px",
                 marginLeft: "17px",
                 height: "64px",
-                overflow: "scroll",
+                overflow: "auto",
                 marginTop: "5px"
             }}
         >

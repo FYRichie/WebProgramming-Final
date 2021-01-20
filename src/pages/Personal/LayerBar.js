@@ -9,7 +9,8 @@ import Layer from "./Layer";
 const {SubMenu} = Menu;
 const {info} = Modal;
 
-export default (buttonStates) => {
+export default (props) => {
+    const buttonStates = props.states;
     const [modalVisible, setModalVisible] = useState(false);
     const layerNameRef = React.useRef();
     const layerColorRef = React.useRef();
@@ -54,16 +55,16 @@ export default (buttonStates) => {
 
     return (
         <div>
-            <Button
-                shape="circle" 
+            <Button 
                 icon={<PlusOutlined />} 
                 onClick={showAddModal}
                 style={{
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    margin: "2px 0px 2px 2px"
                 }}
-            />
+            >Add Layer</Button>
             <Modal 
                 title="Add a layer!"
                 centered
@@ -80,7 +81,7 @@ export default (buttonStates) => {
                 theme="light" 
                 mode="inline"
                 style={{
-                    marginLeft:"2px"
+                    margin:"0px 2px 0px 2px"
                 }}
             >
                 {layers()}

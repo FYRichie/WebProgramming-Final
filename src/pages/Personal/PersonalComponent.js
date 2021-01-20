@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Layout, Menu, message, Spin, Modal, Button, Result } from "antd";
+import { Layout, Menu, message, Spin, Modal, Button, Result, Card } from "antd";
 import {
     UserOutlined,
     ScheduleOutlined,
@@ -11,9 +11,12 @@ import "./PersonalPage.css";
 import LayerBar from "./LayerBar";
 import Demo from "./Demo";
 import Profile from "./Profile";
+import Producer from "../../images/Producer.png"
+import { Description } from "@material-ui/icons";
 
 const {Header, Content, Footer, Sider} = Layout;
 const {SubMenu} = Menu;
+const {Meta} = Card;
 
 export default (buttonStates, sendData) => {
     const [collapsed, setCollapsed] = useState(true);
@@ -54,9 +57,9 @@ export default (buttonStates, sendData) => {
         setLogoutModal(false);
     }
 
-    const comfirmLogout = () => {
+    const comfirmLogout = async() => {
         setLogoutModal(false);
-        sendData(['save', {
+        await sendData(['save', {
             ID: buttonStates.userID,
             data: buttonStates.userData
         }]);
@@ -71,7 +74,29 @@ export default (buttonStates, sendData) => {
         console.log("Testing");
     }
 
-    const personalComponent = () => buttonStates.userData ? <React.Fragment>
+    const Description = <>This website is for you to schedule your busy days.
+        <br />Also you can make some notes for your schedules.
+        <br />Hope you like the design.    
+        <br />by 黃曜廷 傅譽 郭尚睿
+        <br />2020-01-21
+    </>
+    const def = <Card
+        hoverable
+        style={{
+            width: "1000px",
+            height: "610px",
+            margin: "20px 0px 0px 20px"
+        }}
+        cover={<img src={Producer}/>}
+    >
+        <Meta 
+            title="Welcome to use our development!" 
+            description={Description}
+        />
+    </Card>;
+
+    return (
+        buttonStates.userData ? <React.Fragment>
         <Layout>
             <Header className="header">
                 <div className="logo" />
@@ -83,7 +108,7 @@ export default (buttonStates, sendData) => {
             </Header>
             <Layout style={{
                 minHeight: '100vh',
-                background: "linear-gradient(90deg, #003D79, rgb(62, 151, 183) 500px)"
+                background: "linear-gradient(90deg, #003D79, rgb(62, 151, 183) 500px)",
             }}>
                 <Sider collapsible collapsed={collapsed} onCollapse={onCollapse} className="select-bar">
                     <Menu theme="light" mode="inline">
@@ -100,9 +125,10 @@ export default (buttonStates, sendData) => {
                         </Menu.Item>
                     </Menu>
                 </Sider>
-                {BTLayerBar ? LayerBar(buttonStates) : <div />}
-                {Schedule ? <Demo appointments={buttonStates.userData}/>: <div />}
-                {BTProfile ? Profile(buttonStates) : <div />}
+                {!BTLayerBar && !Schedule && !BTProfile ? def : null}
+                {BTLayerBar ? <LayerBar states={buttonStates} /> : null}
+                {Schedule ? <Demo appointments={buttonStates.userData}/> : null}
+                {BTProfile ? <Profile states={buttonStates}/> : null}
                 <Modal
                     title="Logout"
                     centered
@@ -123,9 +149,5 @@ export default (buttonStates, sendData) => {
             title="404"
             subTitle="There exist some error..."
         />
-    </React.Fragment>;
-    
-    return {
-        personalComponent
-    };
+    </React.Fragment>);
 };

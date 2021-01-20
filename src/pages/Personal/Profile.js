@@ -1,6 +1,5 @@
 import { Card, Input, Modal, Button, Upload, message, Tag } from 'antd';
 import { EllipsisOutlined } from '@ant-design/icons';
-
 import React,{ useState } from 'react';
 import { 
     FieldTimeOutlined,
@@ -12,7 +11,8 @@ import { ContactSupportOutlined } from '@material-ui/icons';
 
 const { Meta } = Card;
 
-export default (buttonStates) => {
+export default (props) => {
+    const buttonStates = props.states;
     const [fileList, setFileList] = useState([]);
     const [editUserName, setEditUserName] = useState(false);
     const [userNameModal, setUserNameModal] = useState(false);
@@ -136,7 +136,6 @@ export default (buttonStates) => {
                     hoverable
                     onClick={() => {
                         window.open("http://localhost:3000");
-                        //newWindow.focus();
                     }}
                 >
                     <FieldTimeOutlined style={{marginRight: "3px"}}/>

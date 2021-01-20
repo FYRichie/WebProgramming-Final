@@ -20,15 +20,13 @@ function PersonalPage(){
         "SaveLoading": SaveLoading,
         "setSaveLoading": setSaveLoading,
         "userID": userID,
-        "setUserID": setUserID
+        "setUserID": setUserID,
     }
 
     const servingUrl = window.location.pathname;
     const sendData = (data) => {
         client.send(JSON.stringify(data));
     }
-
-    const {personalComponent} = PersonalComponent(buttonStates, sendData);
 
     if (servingUrl.length > 1){
         if (servingUrl[10] === "_"){
@@ -66,7 +64,7 @@ function PersonalPage(){
 
     return (
         <BrowserRouter>
-            {<Route path="/Personal/" component={personalComponent}></Route> }
+            {<Route path="/Personal/" component={() => PersonalComponent(buttonStates, sendData)}></Route> }
         </BrowserRouter>
     );
 }
