@@ -1,5 +1,5 @@
 const path = require('path');
-require('dotenv').config({path: path.resolve(__dirname + '../src/.env')});
+require('dotenv').config();
 
 const http = require('http');
 const express = require('express');
@@ -13,7 +13,6 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({server});
 
 const URL = 'mongodb+srv://b08901039:f1127EE1688@webprogramming.rimw2.mongodb.net/webprogramming-hw6?retryWrites=true&w=majority';
-
 mongoose.connect(URL, {  //need to change to process.env.MONGO_URL
     useNewUrlParser: true,
     useUnifiedTopology: true

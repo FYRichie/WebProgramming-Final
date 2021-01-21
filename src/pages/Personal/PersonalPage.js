@@ -2,8 +2,10 @@ import "./PersonalPage.css";
 import React, {useState} from "react";
 import {BrowserRouter, Route} from "react-router-dom";
 import PersonalComponent from "./PersonalComponent";
+require('dotenv').config();
 
-const client = new WebSocket('ws://localhost:4000');
+const URL = process.env.REACT_APP_baseURL || 'ws://localhost:80';
+const client = new WebSocket(URL);
 
 function PersonalPage(){
     const [hasAskData, setHasAskData] = useState(false);

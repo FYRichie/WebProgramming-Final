@@ -2,8 +2,10 @@ import React, {useState} from 'react';
 import {Form, Input, Button, message, Image} from "antd";
 import defaultPerson from "../../images/defaultPerson.png";
 import CreatePicture from "../../images/CreatePicture.png";
+require('dotenv').config();
 
-const client = new WebSocket('ws://localhost:4000');
+const URL = process.env.REACT_APP_baseURL || 'ws://localhost:80';
+const client = new WebSocket(URL);
 
 const idGenerator = () => ('_' + Math.random().toString(36).substr(2,16));
 

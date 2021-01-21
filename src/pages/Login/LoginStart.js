@@ -7,8 +7,10 @@ import {
 import GoogleLogin from 'react-google-login';
 import "./Login.css";
 import LoginUser from "../../images/LoginUser.png";
+require('dotenv').config();
 
-const client = new WebSocket('ws://localhost:4000');
+const URL = process.env.REACT_APP_baseURL || 'ws://localhost:80';
+const client = new WebSocket(URL);
 
 export default () => {
     const inputRef = React.createRef();
