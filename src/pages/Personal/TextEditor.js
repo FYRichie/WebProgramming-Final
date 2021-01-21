@@ -3,7 +3,19 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const TextEditor  = (buttonStates, layerIndex, eventIndex) =>{
-    const [data, setData] = useState(buttonStates.userData.layer[layerIndex].event[eventIndex].eventData);
+    let Data = '';
+    let Color = '';
+    let Name = '';
+    if (buttonStates.userData.layer.length > 0) {
+        Color = buttonStates.userData.layer[layerIndex].layerColor;
+        if(buttonStates.userData.layer[layerIndex].event !== undefined) {
+            if(buttonStates.userData.layer[layerIndex].event.length > 0) {
+                Data = buttonStates.userData.layer[layerIndex].event[eventIndex].eventData;
+                Name = buttonStates.userData.layer[layerIndex].event[eventIndex].eventName;
+            }
+        }
+    }
+    const [data, setData] = useState(Data);
     const editing = (event, editor) => {
         setData(editor.getData());
     }
@@ -15,16 +27,16 @@ const TextEditor  = (buttonStates, layerIndex, eventIndex) =>{
     >
         <div
             style={{
-                color: buttonStates.userData.layer[layerIndex].layerColor,
+                color: Color,
                 fontSize: "50px",
                 fontFamily: "fantasy"
             }}
         >
-            {buttonStates.userData.layer[layerIndex].event[eventIndex].eventName}
+            {Name}
         </div>
         <CKEditor
             editor={ ClassicEditor }
-            data={buttonStates.userData.layer[layerIndex].event[eventIndex].eventData}
+            data={data}
             onChange={editing}
         />
     </div>);

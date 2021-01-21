@@ -4,7 +4,7 @@ A service helps you to schedule your busy days
 
 ### Group 55 schEdulE
 
-### Deployed: [link](http://google.com)
+### Deployed: [link](https://web-final-schedule.herokuapp.com/)
 
 ### Demo: [link](http://youtube.com/watch)
 
