@@ -153,7 +153,7 @@ export default () => {
                     </Button>
                 </NavLink>
             </Form.Item>
-            <Form.Item {...tailLayout}>
+            {/* <Form.Item {...tailLayout}>
                 <GoogleLogin
                     clientId="138135020067-2p142v5fj2oo5aslq86q3l5tpu72hh9j.apps.googleusercontent.com"
                     buttonText="Login"
@@ -162,7 +162,7 @@ export default () => {
                 >
                     <span>使用Google登入</span>
                 </GoogleLogin>
-            </Form.Item>
+            </Form.Item> */}
         </Form>
     );
 }
