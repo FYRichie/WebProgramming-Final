@@ -3,7 +3,7 @@ import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const TextEditor  = (buttonStates, layerIndex, eventIndex) =>{
-    const [data, setData] = useState(buttonStates.userData.layer[layerIndex].event[eventIndex].eventData);
+    if(buttonStates.userData.layer.length > 0) const [data, setData] = useState(buttonStates.userData.layer[layerIndex].event[eventIndex].eventData);
     const editing = (event, editor) => {
         setData(editor.getData());
     }
